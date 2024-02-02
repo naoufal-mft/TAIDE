@@ -1,0 +1,58 @@
+h3 {
+  color: #212529;
+}
+
+a, a:visited {
+  color: #343a40;
+}
+
+a:focus, a:hover {
+  color: #4b545c;
+}
+
+.list-drink .list-drink-header i {
+  color: #adb5bd;
+}
+
+.list-drink .media {
+  position: relative;
+}
+
+.list-drink .media:nth-child(3) {
+  margin-bottom: 3rem;
+}
+
+.list-drink .media:nth-child(3)::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 4px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translate(-50%, 100%);
+}
+
+.list-drink .media-thumb {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+}
+
+.list-drink .media-thumb::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 64px;
+  background-color: #adb5bd;
+  position: absolute;
+  z-index: -1;
+  transform: translate(0px, 3px) rotate(10deg);
+  border-radius: 10px;
+}
+
