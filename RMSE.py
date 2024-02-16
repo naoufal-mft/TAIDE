@@ -1,10 +1,11 @@
 import csv
 import numpy as np
-from sklearn.metrics import mean_squared_error, mean_absolute_error
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
 
 fichiercsv = "predicted_prices_with_dates.csv"
 
-# dictionnaire pour stocker les valeurs prédites et réelles par date
+# Dictionnaire pour stocker les valeurs prédites et réelles par date
 Val_Date = {}
 
 with open(fichiercsv, newline='') as fichier_csv:
@@ -14,37 +15,31 @@ with open(fichiercsv, newline='') as fichier_csv:
     for ligne in readCSV:
         date = ligne[0]
 
-        # si la date est déjà dans le dictionnaire
+        # Si la date est déjà dans le dictionnaire
         if date not in Val_Date:
             Val_Date[date] = {'predicted': [], 'actual': []}
 
         Val_Date[date]['predicted'].append(float(ligne[3]))
         Val_Date[date]['actual'].append(float(ligne[6]))
 
-# Calculer les error pour chaque date
-error = []
-rmse_global = 0.0
-
+# Calculer les erreurs pour chaque date
+dates = []
+rmse_val = []
 for date, valeurs in Val_Date.items():
     predicted_values = np.array(valeurs['predicted'])
     actual_values = np.array(valeurs['actual'])
 
     mse = mean_squared_error(actual_values, predicted_values)
     rmse = np.sqrt(mse)
-    mae = mean_absolute_error(actual_values, predicted_values)
 
-    error.append({'date': date, 'predicted': predicted_values, 'actual': actual_values, 'rmse': rmse, 'mae': mae})
-    rmse_global += rmse
+    dates.append(date)
+    rmse_val.append(rmse)
+
+# Écrire les dates et les valeurs RMSE dans un fichier CSV
+with open('dates_rmse.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(['Date', 'RMSE'])
+    for date, rmse in zip(dates, rmse_val):
+        writer.writerow([date, rmse])
 
 
-for erreur in error:
-    print(f"Date: {erreur['date']}")
-    print(f"Predicted: {erreur['predicted']}")
-    print(f"Actual: {erreur['actual']}")
-    print(f"RMSE: {erreur['rmse']}")
-    print(f"MAE: {erreur['mae']}")
-    print()
-
-# Calculer le RMSE global
-rmse_global /= len(error)
-print(f"RMSE global (moyenne): {rmse_global}")
