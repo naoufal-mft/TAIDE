@@ -24,22 +24,12 @@ def sma(data, window):
     sma = data.rolling(window = window,min_periods=1).mean()
     return sma
 
-
-
-#tsla = get_historic_data('SPY')
-#tsla = tsla.set_index('date')
-#tsla = tsla[tsla.index >= '2022-01-01']
-#tsla.to_csv('spy.csv')
-
 tsla = pd.read_csv('donnees_boursieres_TSLA.csv').set_index('date')
 tsla.index = pd.to_datetime(tsla.index)
 
-#tsla.tail()
 
 tsla['sma_20'] = sma(tsla['close'], 20)
 
-tsla.to_csv('spyy.csv')
-print(tsla)
 def bb(data, sma, window):
     std = data.rolling(window = window,min_periods=1).std()
     upper_bb = sma + std * 2
@@ -84,8 +74,21 @@ def implement_bb_strategy(data, lower_bb, upper_bb):
 
     return buy_price, sell_price, bb_signal
 buy_price, sell_price, bb_signal = implement_bb_strategy(tsla['close'], tsla['lower_bb'], tsla['upper_bb'])
+tsla["buy"]=buy_price
+tsla["sell"]=sell_price
+
+# Create a new column 'merged_signal' based on 'buy' and 'sell' columns
+tsla['merged_signal'] = np.where(~tsla['sell'].isna(), 'sell', np.where(~tsla['buy'].isna(), 'buy', np.nan))
 
 
+# Drop the original 'buy' and 'sell' columns if needed
+df = tsla.drop(['buy', 'sell'], axis=1)
+
+# If you want to replace NaN with a specific value, you can use fillna
+df['merged_signal'] = df['merged_signal'].fillna('no_signal')
+df.to_csv('result_bb.csv')
+
+print(df)
 tsla['close'].plot(label = 'CLOSE PRICES', alpha = 0.3)
 tsla['upper_bb'].plot(label = 'UPPER BB', linestyle = '--', linewidth = 1, color = 'black')
 tsla['sma_20'].plot(label = 'MIDDLE BB', linestyle = '--', linewidth = 1.2, color = 'grey')
@@ -114,6 +117,9 @@ for i in range(len(tsla['close'])):
 upper_bb = tsla['upper_bb']
 lower_bb = tsla['lower_bb']
 close_price = tsla['close']
+
+
+
 bb_signal = pd.DataFrame(bb_signal).rename(columns={0: 'bb_signal'}).set_index(tsla.index)
 position = pd.DataFrame(position).rename(columns={0: 'bb_position'}).set_index(tsla.index)
 
