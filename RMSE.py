@@ -59,4 +59,15 @@ with open('dates_rmse.csv', 'w', newline='') as csvfile:
     for date, rmse in zip(dates, rmse_val):
         writer.writerow([date, rmse])
 
+# Tracer les valeurs RMSE par date
+plt.figure(figsize=(10, 6))
+plt.plot(dates, rmse_val, marker='o', linestyle='-')
+plt.title('RMSE par date')
+plt.xlabel('Date')
+plt.ylabel('RMSE')
+plt.xticks(rotation=45)  # Rotation des étiquettes de l'axe des x pour une meilleure lisibilité
+plt.tight_layout()  # Ajustement automatique de la disposition pour éviter la coupure des étiquettes
+plt.grid(True)  # Afficher une grille
+plt.show()
+
 
