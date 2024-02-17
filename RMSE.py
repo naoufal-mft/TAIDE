@@ -7,6 +7,8 @@ fichiercsv = "predicted_prices_with_dates.csv"
 
 # Dictionnaire pour stocker les valeurs prédites et réelles par date
 Val_Date = {}
+all_predicted_values = []
+all_actual_values = []
 
 with open(fichiercsv, newline='') as fichier_csv:
     readCSV = csv.reader(fichier_csv, delimiter=',')
@@ -34,6 +36,21 @@ for date, valeurs in Val_Date.items():
 
     dates.append(date)
     rmse_val.append(rmse)
+
+# Parcourir toutes les dates dans Val_Date et collecter les valeurs prédites et réelles
+for valeurs in Val_Date.values():
+    all_predicted_values.extend(valeurs['predicted'])
+    all_actual_values.extend(valeurs['actual'])
+
+# Convertir les listes en tableaux numpy
+all_predicted_values = np.array(all_predicted_values)
+all_actual_values = np.array(all_actual_values)
+
+# Calculer le RMSE global
+global_mse = mean_squared_error(all_actual_values, all_predicted_values)
+global_rmse = np.sqrt(global_mse)
+
+print("RMSE global:", global_rmse)
 
 # Écrire les dates et les valeurs RMSE dans un fichier CSV
 with open('dates_rmse.csv', 'w', newline='') as csvfile:
