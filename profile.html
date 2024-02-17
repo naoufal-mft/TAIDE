@@ -99,7 +99,7 @@
                                             <form>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="username"><strong>Pseudo</strong></label><input class="form-control" type="text" id="username" placeholder="pseudo d'utilisateur" name="username"></div>
+                                                        <div class="mb-3"><label class="form-label" for="username"><strong>Username</strong></label><input class="form-control" type="text" id="username" placeholder="pseudo d'utilisateur" name="username"></div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="mb-3"><label class="form-label" for="email"><strong>Adresse mail</strong></label><input class="form-control" type="email" id="email" placeholder="user@example.com" name="email"></div>
@@ -119,23 +119,26 @@
                                     </div>
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <p class="text-primary m-0 fw-bold">Contact </p>
+                                            <p class="text-primary m-0 fw-bold">Vos Stocks Favoris </p>
                                         </div>
                                         <div class="card-body">
-                                            <form>
-                                                <div class="mb-3"><label class="form-label" for="address"><strong>Adresse</strong></label><input class="form-control" type="text" id="address"  name="address"></div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="city"><strong>Ville</strong></label><input class="form-control" type="text" id="city"  name="city"></div>
-                                                    </div>
-													<div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="city"><strong>Code postal</strong></label><input class="form-control" type="text" id="city"  name="city"></div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="country"><strong>Pays</strong></label><input class="form-control" type="text" id="country" name="country"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Enregistrer&nbsp;Paramètres</button></div>
+                                            <form id="stockForm">
+                                                <label for="AAPL">
+                                                    <input type="checkbox" id="AAPL" name="stock" value="AAPL" checked>
+                                                    AAPL
+                                                </label><br>
+                                                <label for="TSLA">
+                                                    <input type="checkbox" id="TSLA" name="stock" value="TSLA" checked>
+                                                    TSLA
+                                                </label><br>
+                                                <label for="NIO">
+                                                    <input type="checkbox" id="NIO" name="stock" value="NIO" checked>
+                                                    NIO
+                                                </label><br>
+                                                <label for="NVDA">
+                                                    <input type="checkbox" id="NVDA" name="stock" value="NVDA" checked>
+                                                    NVDA
+                                                </label><br>
                                             </form>
                                         </div>
                                     </div>
