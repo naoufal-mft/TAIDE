@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/css/Bootstrap-4---Payment-Form.css">
     <link rel="stylesheet" href="assets/css/HTML-layout-with-an-unordered-list.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/1.1.1/chartjs-plugin-zoom.min.js"></script>
+
+
 </head>
 
 <body id="page-top">
@@ -24,7 +30,7 @@
                     <li class="nav-item"><a class="nav-link active" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Page d'accueil</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="profile.html"><i class="fas fa-user"></i><span>Profil</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="table.html"><i class="fas fa-table"></i><span>Recommandations</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="strat.html"><i class="fas fa-user-circle"></i><span>Stratégies et sentiments</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="strat.html"><i class="fas fa-bullseye"></i><span>Stratégies et sentiments</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="login.html"><i class="far fa-user-circle"></i><span>Connexion</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="register.html"><i class="fas fa-user-circle"></i><span>Inscription</span></a></li>
                 </ul>
@@ -80,46 +86,11 @@
                         <h3 class="text-dark mb-0">Page d'accueil</h3>
                     </div>
                     <div class="row">
-                        <div class="col-lg-5 col-xl-3 col-xxl-4 mb-4">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="text-primary fw-bold m-0">Marché :</h6>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Nom</th>
-                                            <th>Last</th>
-                                            <th>Chg.%</th>
-                                            <th>Close</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>TSLA</td>
-                                            <td>244.14</td>
-                                            <td style="color: rgb(213,12,12);">-1.05%</td>
-                                            <td>132.75M</td>
-                                        </tr>
-                                        <tr>
-                                            <td>AAPL</td>
-                                            <td>189.37</td>
-                                            <td style="color: #20d71c;">+0.54%</td>
-                                            <td>32.00M</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="card shadow mb-4">
-                                <ul class="list-group list-group-flush"></ul>
-                            </div>
-                        </div>
+                        
                         <div class="col-lg-7 col-xl-8">
                             <div class="card shadow mb-4">
                                 <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h6 class="text-primary fw-bold m-0">Flux de stocks</h6>
+                                    <h6 class="text-primary fw-bold m-0">Flux de stock</h6>
                                     <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
                                         <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
                                             <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Autre action</a>
@@ -128,13 +99,29 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div id="tvchart">
-									<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-									<script src="index.js"></script>
+                                    <!--  le conteneur du stock flow chart -->
+                                    <canvas id="myChart" width="800" height="400"></canvas>
+                                    <button id="nextPredictionBtn" class="btn btn-primary mt-3">Voir le Jour suivant</button>
+            
+                                    <script src="predict.js"></script>
+                                </div>
                             </div>
                         </div>
-                      
                     </div>
+                        <div class="row">
+                        <div class="col-lg-7 col-xl-8">
+                            <div class="card shadow mb-4">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="text-primary fw-bold m-0">RMSE</h6>
+                                </div>
+                                <div >
+                                    <!--  le conteneur du rmse chart -->
+                                    <canvas id="rmseChart" width="800" height="400"></canvas>
+                                    
+            
+                                    <script src="rmse.js"></script>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -186,9 +173,12 @@
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/chart.min.js"></script>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="index.js"></script>
     <script src="assets/js/bs-init.js"></script>
-    <script src="assets/js/Bootstrap-4---Payment-Form-script.js"></script>
     <script src="assets/js/theme.js"></script>
+    
 </body>
 
 </html>
