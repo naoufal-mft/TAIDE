@@ -1,4 +1,5 @@
-function loadCSV(callback) {
+window.addEventListener('load', () => {
+    function loadCSV(callback) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -11,7 +12,7 @@ function loadCSV(callback) {
             }
         }
     };
-    xhr.open('GET', 'dates_rmse.csv');
+    xhr.open('GET', 'csv_files/dates_rmse.csv');
     xhr.send();
 }
 
@@ -59,3 +60,4 @@ function createChart(data) {
 
 // Charger le fichier CSV et créer le graphique
 loadCSV(createChart);
+});
