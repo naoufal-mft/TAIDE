@@ -199,7 +199,7 @@ window.addEventListener('load', () => {
                 lastPrediction[`Date_${i}`],
                 lastPrediction[`Predicted_Close_${i}`],
                 lastPrediction[`Actual_Close_${i}`],
-                trainingData[trainingData.length - 1].closingPrice
+                trainingData[trainingData.length - 1].closingPrice+ " de"+trainingData[trainingData.length - 1].date
             ];
             nouvellesLignes.push(newRow);
         }
@@ -207,7 +207,7 @@ window.addEventListener('load', () => {
         const totalPages = dataTable.page.info().pages;
 
         // Utiliser la méthode rows.add() pour ajouter de nouvelles lignes
-        dataTable.rows.add(nouvellesLignes).draw();
+        dataTable.rows.add(nouvellesLignes).reverse().draw();
 
         const newTotalPages = dataTable.page.info().pages;
         if (newTotalPages > totalPages) {
