@@ -8,12 +8,16 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/css/Bootstrap-4---Payment-Form.css">
     <link rel="stylesheet" href="assets/css/HTML-layout-with-an-unordered-list.css">
+    <link rel="stylesheet" href="hidden.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/1.1.1/chartjs-plugin-zoom.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
 
 
 </head>
@@ -73,29 +77,45 @@
                         </ul>
                     </div>
                 </nav>
-                <div class="container-fluid">
+                
+                <div class="container-fluid hidden-content" id="contentContainer">
                     <div class="d-sm-flex justify-content-between align-items-center mb-4">
                         <h3 class="text-dark mb-0">Page d'accueil</h3>
                     </div>
                     <div class="row">
                         
-                        <div class="col-lg-7 col-xl-8">
+                        <div class="col-lg-6 col-xl-12">
                             <div class="card shadow mb-4">
                                 <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h6 class="text-primary fw-bold m-0">Flux de stock</h6>
-                                    <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
-                                        <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
-                                            <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Autre action</a>
-                                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#">&nbsp;Autre</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <!--  le conteneur du stock flow chart -->
-                                    <canvas id="myChart" width="800" height="400"></canvas>
-                                    <button id="nextPredictionBtn" class="btn btn-primary mt-3">Voir le Jour suivant</button>
-                                    <script src="js/predict.js"></script>
+                                    <h6 class="text-primary fw-bold m-0">Flux du stock</h6>
                                     
+                                </div>
+                                <div class="card-body" >
+                                    <!--  le conteneur du stock flow chart -->
+                                    
+                                        <canvas id="myChart" width="1800" height="400"></canvas> <!-- Gardez la largeur du canvas fixe -->
+                                   
+                                    <button id="nextPredictionBtn" class="btn btn-primary mt-3">Voir le Jour suivant</button>
+                                    <script src="js/predict.js"></script> 
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+                        <div class="col-lg-6 col-xl-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="text-primary fw-bold m-0">La différence entre prix prédits et prix réels du stock</h6>
+                                    
+                                </div>
+                                <div class="card-body" >
+                                    <!--  le conteneur du stock flow chart -->                       
+                                    <div style="max-width: 100%; overflow-x: auto;">
+                                        <canvas id="PredictionChart" width="1000" height="200"></canvas>
+                                    </div>   
+                                                                
                                 </div>
                             </div>
                         </div>
@@ -106,41 +126,45 @@
                                     <div class="card-header d-flex justify-content-between align-items-center">
                                         <h6 class="text-primary fw-bold m-0">RMSE</h6>
                                     </div>
-                                    <div >
-                                        <!--  le conteneur du rmse chart -->
-                                        <canvas id="rmseChart" width="800" height="400"></canvas>
-                                        <script src="js/rmse.js"></script>
+                                    <div class="card-body">
+                                        <!-- Conteneur du graphique d'erreur avec une largeur maximale -->
+                                        <div style="max-width: 100%; overflow-x: auto;">
+                                            <canvas id="errorChart" width="1000" height="200"></canvas>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                     </div>
+                        
                     <div class="row">
                         <div class="col-lg-12 col-xl-12 mb-4">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="text-primary fw-bold m-0">Historique</h6>
                                 </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table" id="myTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Prix prédits</th>
-                                            <th>Prix réels</th>
-                                            <th>Prix de clôture</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                    
-                                </table>
-                                
-                            </div>
-                            <div class="card shadow mb-4">
-                                <ul class="list-group list-group-flush"></ul>
+                                <div class="table-responsive">
+                                    <table class="table" id="myTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Prix prédits</th>
+                                                <th>Prix réels</th>
+                                                <th>Prix de clôture</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <!-- Ajout de la pagination -->
+                                <div class="card-footer">
+                                    <nav aria-label="Table pagination">
+                                        <ul class="pagination justify-content-center" id="pagination"></ul>
+                                    </nav>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
             <footer class="bg-white sticky-footer">
@@ -154,7 +178,10 @@
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
+    <script src="js/contenu.js"></script>
     
+    
+
 </body>
 
 </html>
