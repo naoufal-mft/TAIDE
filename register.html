@@ -7,7 +7,6 @@
     <title>Register - Brand</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-    <link rel="stylesheet" href="assets/css/Bootstrap-4---Payment-Form.css">
     <link rel="stylesheet" href="assets/css/HTML-layout-with-an-unordered-list.css">
 </head>
 
@@ -24,49 +23,100 @@
                             <div class="text-center">
                                 <h4 class="text-dark mb-4">Créer un compte!</h4>
                             </div>
-                            <form class="user">
+                            <form class="user" action="" method="POST">
                                 <div class="row mb-3">
                                     <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" id="exampleFirstName" placeholder="Nom" name="first_name"></div>
                                     <div class="col-sm-6"><input class="form-control form-control-user" type="text" id="exampleLastName" placeholder="Prénom" name="last_name"></div>
-                                    
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Adresse mail" name="email"></div>
                                     <div class="col-sm-6"><input class="form-control form-control-user" type="text" id="exempleUsername" placeholder="Username" name="username"></div>
-                                </div>   
-                                <div class="row mb-3">
+                                </div>                                <div class="row mb-3">
                                     <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="password" id="examplePasswordInput" placeholder="Mot de passe" name="password"></div>
                                     <div class="col-sm-6"><input class="form-control form-control-user" type="password" id="exampleRepeatPasswordInput" placeholder="Confirmer le mot de passe" name="password_repeat"></div>
                                 </div>
                                 <hr><label class="form-label">Vos Stocks Préférés</label>
                                 <ul class="list-group">
                                     <li class="list-group-item">
-                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">APPL</label></div>
+                                        <div class="form-check"><input class="form-check-input" name="checkbox" type="checkbox" id="formCheck-1" value="AAPL"><label class="form-check-label" for="formCheck-1">APPL</label></div>
                                     </li>
                                     <li class="list-group-item">
-                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-2">TSLA</label></div>
+                                        <div class="form-check"><input class="form-check-input" name="checkbox" type="checkbox" id="formCheck-2" value="AMZN"><label class="form-check-label" for="formCheck-2">AMZN</label></div>
                                     </li>
                                     <li class="list-group-item">
-                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-3">NIO</label></div>
+                                        <div class="form-check"><input class="form-check-input" name="checkbox" type="checkbox" id="formCheck-3" value="TSLA"><label class="form-check-label" for="formCheck-3">TSLA</label></div>
                                     </li>
                                     <li class="list-group-item">
-                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-4"><label class="form-check-label" for="formCheck-4">NVDA</label></div>
+                                        <div class="form-check"><input class="form-check-input" name="checkbox" type="checkbox" id="formCheck-4" value="META"><label class="form-check-label" for="formCheck-4">META</label></div>
                                     </li>
                                 </ul>
                                 <hr><button class="btn btn-primary d-block btn-user w-100" type="submit">S'enregistrer</button>
                                 <hr>
                             </form>
                             <div class="text-center"><a class="small" href="forgot-password.html">mot de passe oublié?</a></div>
-                            <div class="text-center"><a class="small" href="login.html">Vous avez un compte déjà? Se connecter!</a></div>
+                            <div class="text-center"><a class="small" href="http://localhost:4500/">Vous avez un compte déjà? Se connecter!</a></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        const fs = require('fs');
+
+        function registerUser() {
+            // Get user input
+            var name = document.getElementById("exampleFirstName").value;
+            var prenom = document.getElementById("exampleLastName").value;
+            var email = document.getElementById("exampleInputEmail").value;
+            var password = document.getElementById("examplePasswordInput").value;
+    
+            // Get selected stocks
+            var selectedStocks = [];
+            var stocksCheckboxes = document.querySelectorAll('input[type="checkbox"][id^="formCheck-"]:checked');
+            stocksCheckboxes.forEach(function (checkbox) {
+                selectedStocks.push(document.getElementById(checkbox.id).value);
+            });
+    
+            // Create user object
+            var newUser = {
+                "name": name,
+                "prenom": prenom,
+                "email": email,
+                "password": password,
+                "stocks": selectedStocks
+            };
+            
+            const data = fs.readFileSync('userss.json');
+            alert("Registration successful");
+            const userJSON = JSON.stringify(newUser);
+            const jsonData = JSON.parse(data);
+            jsonData.users.push(userJSON)
+            const jsonString = JSON.stringify(jsonData);
+            
+            fs.writeFileSync('userss.json', jsonString, 'utf-8', (err) => {
+  if (err) throw err;
+  console.log('Data added to file');
+});
+            //alert(userJSON);
+            
+            
+            alert("Registration successful");
+            // Redirect to the login page upon successful registration
+            window.location.href = "login.html";
+    
+            // Prevent the form from submitting to the server
+            return false;
+        }
+    </script>
+    
+    
+    
+
+
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
-    <script src="assets/js/Bootstrap-4---Payment-Form-script.js"></script>
     <script src="assets/js/theme.js"></script>
 </body>
 

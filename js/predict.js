@@ -95,7 +95,7 @@ window.addEventListener('load', () => {
             labels: [],
             datasets: [
                 {
-                    label: 'Prix de clôture (entraînement)',
+                    label: 'Prix de clôture',
                     data: [],
                     borderColor: 'blue',
                     fill: false
@@ -116,8 +116,20 @@ window.addEventListener('load', () => {
         },
         options: {
             scales: {
+                x: {
+                    
+                    
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
                 y: {
-                    beginAtZero: false
+                    beginAtZero: false,
+                    title: {
+                        display: true,
+                        text: 'Prix  en $'
+                    }
                 }
             },
             plugins: {
@@ -197,9 +209,9 @@ window.addEventListener('load', () => {
         for (let i = 1; i <= 3; i++) {
             const newRow = [
                 lastPrediction[`Date_${i}`],
-                lastPrediction[`Predicted_Close_${i}`],
-                lastPrediction[`Actual_Close_${i}`],
-                trainingData[trainingData.length - 1].closingPrice+ " de"+trainingData[trainingData.length - 1].date
+                lastPrediction[`Predicted_Close_${i}`]+"$",
+                lastPrediction[`Actual_Close_${i}`]+"$",
+                trainingData[trainingData.length - 1].closingPrice+ "$ à "+trainingData[trainingData.length - 1].date
             ];
             nouvellesLignes.push(newRow);
         }
@@ -207,16 +219,17 @@ window.addEventListener('load', () => {
         const totalPages = dataTable.page.info().pages;
 
         // Utiliser la méthode rows.add() pour ajouter de nouvelles lignes
-        dataTable.rows.add(nouvellesLignes).reverse().draw();
+        dataTable.rows.add(nouvellesLignes).draw();
 
         const newTotalPages = dataTable.page.info().pages;
         if (newTotalPages > totalPages) {
             // Utiliser la méthode page() pour aller à la dernière page
-            dataTable.page('last').draw('page');
+            dataTable.page('first').draw('page');
         }
     }
 
 
+    // Créer le graphique d'erreur initial
     // Créer le graphique d'erreur initial
     const errorChartCtx = document.getElementById('errorChart').getContext('2d');
     const errorChart = new Chart(errorChartCtx, {
@@ -242,27 +255,30 @@ window.addEventListener('load', () => {
     });
     
     // Fonction pour mettre à jour le graphique d'erreur avec les données actuelles
-    function mettreAJourPredictionGraphique() {
+    function mettreAJourGraphiqueErreur() {
         const dates = predictedData[0] ? [predictedData[0].Date_1, predictedData[0].Date_2, predictedData[0].Date_3] : [];
         const predictedPrices = predictedData[0] ? [predictedData[0].Predicted_Close_1, predictedData[0].Predicted_Close_2, predictedData[0].Predicted_Close_3] : [];
         const actualPrices = predictedData[0] ? [predictedData[0].Actual_Close_1, predictedData[0].Actual_Close_2, predictedData[0].Actual_Close_3] : [];
+    
         // Calculer les erreurs
         const errors = predictedPrices.map((predictedPrice, index) => Math.abs(predictedPrice - actualPrices[index]));
+    
         // Calculer la racine carrée moyenne des erreurs
         const rmse = Math.sqrt(errors.reduce((sum, error) => sum + Math.pow(error, 2), 0) / errors.length);
-        // Mettre à jour le graphique d'erreur
+    
+        // Mettre à jour le graphique d'erreur avec les nouvelles données de RMSE
         dates.forEach((date, index) => {
             const existingIndex = errorChart.data.labels.indexOf(date);
             if (existingIndex !== -1) {
-                errorChart.data.datasets[0].data[existingIndex] = errors[index];
+                // Remplacer les RMSE existants par le nouveau RMSE si la date existe déjà
+                errorChart.data.datasets[0].data[existingIndex] = rmse;
             } else {
+                // Ajouter la nouvelle date et le RMSE si la date n'existe pas déjà
                 errorChart.data.labels.push(date);
-                errorChart.data.datasets[0].data.push(errors[index]);
+                errorChart.data.datasets[0].data.push(rmse);
             }
         });
-        // Mettre à jour le graphique d'erreur avec les nouvelles données
-        errorChart.data.labels.push(dates[0]);
-        errorChart.data.datasets[0].data.push(rmse);
+    
         errorChart.update();
     }
 
@@ -302,7 +318,7 @@ window.addEventListener('load', () => {
                 y: {
                     title: {
                         display: true,
-                        text: 'Prix'
+                        text: 'Prix  en $'
                     }
                 }
             }
@@ -311,7 +327,7 @@ window.addEventListener('load', () => {
 
     // Fonction pour mettre à jour le nouveau graphique avec les données actuelles
 
-    function mettreAJourGraphiqueErreur() {
+    function mettreAJourPredictionGraphique() {
         // Extraire les dates, prix prédits et prix réels de predictionData[0]
         const dates = predictedData[0] ? [predictedData[0].Date_1, predictedData[0].Date_2, predictedData[0].Date_3] : [];
         const predictedPrices = predictedData[0] ? [predictedData[0].Predicted_Close_1, predictedData[0].Predicted_Close_2, predictedData[0].Predicted_Close_3] : [];

@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/css/Bootstrap-4---Payment-Form.css">
     <link rel="stylesheet" href="assets/css/HTML-layout-with-an-unordered-list.css">
 </head>
 
@@ -24,10 +23,8 @@
                     <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Page d'accueil</span></a></li>
                     <li class="nav-item"><a class="nav-link active" href="profile.html"><i class="fas fa-user"></i><span>Profil</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="table.html"><i class="fas fa-table"></i><span>Recommandations</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="strat.html"><i class="fas fa-bullseye"></i><span>Stratégies et sentiments</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="http://localhost:4502"><i class="fas fa-bullseye"></i><span>Stratégies et sentiments</span></a></li>
 
-                    <li class="nav-item"><a class="nav-link" href="login.html"><i class="far fa-user-circle"></i><span>Connexion</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="register.html"><i class="fas fa-user-circle"></i><span>Inscription</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -35,37 +32,9 @@
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">
-                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
-                        <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Recherche ..."><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                        </form>
+                    <div class="container-fluid">
+                        
                         <ul class="navbar-nav flex-nowrap ms-auto">
-                            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
-                                <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in" aria-labelledby="searchDropdown">
-                                    <form class="me-auto navbar-search w-100">
-                                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Recherche de ...">
-                                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">Centre de notifications</h6><a class="dropdown-item text-center small text-gray-500" href="#">Notifications</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
-                                        <div class="d-none d-sm-block topbar-divider"></div>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">Centre de notifications</h6><a class="dropdown-item text-center small text-gray-500" href="#">Notifications</a>
-                                    </div>
-                                </div>
-                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
-                            </li>
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">Utilisateur</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar5.jpeg"></a>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profil</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Paramètres</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activités</a>
@@ -96,21 +65,21 @@
                                             <p class="text-primary m-0 fw-bold">Paramètres d'utilisateur</p>
                                         </div>
                                         <div class="card-body">
-                                            <form>
+                                            <form id="userDetailsForm" action="/updateUserDetails" method="POST">
                                                 <div class="row">
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="username"><strong>Username</strong></label><input class="form-control" type="text" id="username" placeholder="pseudo d'utilisateur" name="username"></div>
+                                                        <div class="mb-3"><label class="form-label" for="username"><strong>Username</strong></label><input class="form-control" type="text" id="username" placeholder="pseudo d'utilisateur" name="username" value=""></div>
                                                     </div>
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="email"><strong>Adresse mail</strong></label><input class="form-control" type="email" id="email" placeholder="user@example.com" name="email"></div>
+                                                        <div class="mb-3"><label class="form-label" for="email"><strong>Adresse mail</strong></label><input class="form-control" type="email" id="email" placeholder="user@example.com" name="email" value=""></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="first_name"><strong>Nom</strong></label><input class="form-control" type="text" id="first_name"  name="first_name"></div>
+                                                        <div class="mb-3"><label class="form-label" for="first_name"><strong>Nom</strong></label><input class="form-control" type="text" id="first_name"  name="first_name" value=""></div>
                                                     </div>
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="last_name"><strong>Prénom</strong></label><input class="form-control" type="text" id="last_name"  name="last_name"></div>
+                                                        <div class="mb-3"><label class="form-label" for="last_name"><strong>Prénom</strong></label><input class="form-control" type="text" id="last_name"  name="last_name" value=""></div>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Enregistrer </button></div>
@@ -122,23 +91,25 @@
                                             <p class="text-primary m-0 fw-bold">Vos Stocks Favoris </p>
                                         </div>
                                         <div class="card-body">
-                                            <form id="stockForm">
+                                            <form id="stockForm" action="/updateUserStocks" method="POST">
                                                 <label for="AAPL">
-                                                    <input type="checkbox" id="AAPL" name="stock" value="AAPL" checked>
+                                                    <input type="checkbox" id="AAPL" name="stock" value="AAPL" >
                                                     AAPL
                                                 </label><br>
                                                 <label for="TSLA">
-                                                    <input type="checkbox" id="TSLA" name="stock" value="TSLA" checked>
+                                                    <input type="checkbox" id="TSLA" name="stock" value="TSLA" >
                                                     TSLA
                                                 </label><br>
                                                 <label for="NIO">
-                                                    <input type="checkbox" id="NIO" name="stock" value="NIO" checked>
+                                                    <input type="checkbox" id="NIO" name="stock" value="NIO" >
                                                     NIO
                                                 </label><br>
                                                 <label for="NVDA">
-                                                    <input type="checkbox" id="NVDA" name="stock" value="NVDA" checked>
+                                                    <input type="checkbox" id="NVDA" name="stock" value="NVDA" >
                                                     NVDA
                                                 </label><br>
+                                                <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Enregistrer&nbsp;Paramètres</button></div>
+
                                             </form>
                                         </div>
                                     </div>
@@ -156,6 +127,121 @@
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
+    <script>
+        function updateUserDetails() {
+            // Collect user data from the form
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const firstName = document.getElementById('first_name').value;
+            const lastName = document.getElementById('last_name').value;
+        
+            // Create a JSON payload with user data
+            const data = {
+                username,
+                email,
+                firstName,
+                lastName
+            };
+        
+            // Send a POST request to the server
+            fetch('/updateUserDetails', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('User details updated:', result);
+                // Optionally update UI or show a success message
+            })
+            .catch(error => {
+                console.error('Error updating user details:', error);
+                // Handle errors or show error messages
+            });
+    
+            
+        }
+        function updateUserStocks() {
+            const checkedCheckboxes = document.querySelectorAll('input[name="stock"]');
+            console.log(checkedCheckboxes);
+            console.log("checkedCheckboxes");
+            const selectedStocks = Array.from(checkedCheckboxes).map(checkbox => checkbox.value);
+            const data = {
+                        selectedStocks
+                };
+            
+            
+            
+        
+            // Send a POST request to the server
+            fetch('/updateUserStocks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('User details updated:', result);
+                // Optionally update UI or show a success message
+            })
+            .catch(error => {
+                console.error('Error updating user details:', error);
+                // Handle errors or show error messages
+            });
+    
+            
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            // Fetch data from your server using Fetch API
+            fetch('/data') // Update the URL to match your server endpoint
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    // Parse the data as HTML and append it to the buttonContainer
+                    var user = JSON.parse(data)
+                    document.getElementById('username').value = user[0];
+                    document.getElementById('email').value = user[1];
+                    document.getElementById('first_name').value = user[2];
+                    document.getElementById('last_name').value = user[3];
+                    console.log("success")
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+        // Fetch data from your server using Fetch API
+        fetch('/stocks') // Update the URL to match your server endpoint
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                var user = JSON.parse(data)
+                user.forEach(element => {
+                    
+                    document.getElementById(element.stock.toString()).checked='True'
+                });
+                
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    });
+
+
+        </script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/Bootstrap-4---Payment-Form-script.js"></script>
