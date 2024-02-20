@@ -1,6 +1,6 @@
 //author: S.SEKKOUMI
 
-
+const path = require('path');
 const mysql =require("mysql2");
 const express =require("express");
 const bodyParser= require("body-parser");
@@ -14,7 +14,7 @@ app.use("/assets",express.static("assets"));
 const connection= mysql.createConnection({
     host:"localhost",
     user:"root",
-    password:"1234Azer@",
+    password:"azerty",
     database:"ai_website_db"
 });
 
@@ -22,9 +22,10 @@ connection.connect(function(error){
     if (error) throw error
     else console.log("connected to the database successfully")
 })
-app.get("/",function(req,res){
-    res.sendFile("C:\\Users\\samir\\Desktop\\TRAIDE\\register.html");
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, '..', 'html', 'register.html'));
 })
+
 
 app.post("/",encoder,function(req,res){
     var email = req.body.email;
@@ -34,7 +35,7 @@ app.post("/",encoder,function(req,res){
     var username=req.body.username;
     var stocks = req.body.checkbox
     console.log(stocks)
-    connection.query("INSERT INTO user (nom, prenom,username) VALUES (?, ?)", [name, surname,username], function(error, results, fields) {
+    connection.query("INSERT INTO user (nom, prenom,username) VALUES (?, ?,?)", [name, surname,username], function(error, results, fields) {
         if (error) {
             // Handle the error
             console.error(error);
@@ -50,7 +51,7 @@ app.post("/",encoder,function(req,res){
         } else {
             // Do something if the insertion is successful
             console.log("Stocks inserted successfully");
-            res.redirect("/login");
+            
         }
     });
     
@@ -67,11 +68,14 @@ app.post("/",encoder,function(req,res){
             }
         });
     });
+    res.redirect("/login");
     
 })
 
 app.get("/login",function(req,res){
-    res.sendFile("C:\\Users\\samir\\Desktop\\TRAIDE\\login.html")
+    res.writeHead(301, {
+        Location: "http://localhost:4500/"
+      }).end();
 })
 
 app.listen(4501)

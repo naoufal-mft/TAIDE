@@ -1,6 +1,6 @@
 //author: S.SEKKOUMI
 
-
+const path = require('path');
 const mysql =require("mysql2");
 const express =require("express");
 const app=express();
@@ -12,7 +12,7 @@ app.use("/assets",express.static("assets"));
 const connection= mysql.createConnection({
     host:"localhost",
     user:"root",
-    password:"1234Azer@",
+    password:"azerty",
     database:"ai_website_db"
 });
 
@@ -23,13 +23,13 @@ connection.connect(function(error){
 
 app.get("/",function(req,res){
    
-    res.sendFile("C:\\Users\\samir\\Desktop\\TRAIDE\\table.html");
+    res.sendFile( path.join(__dirname, '..', 'html', 'table.html'));
 })
 
 
 // Modify the '/buttons' route handler
 app.get('/buttons', (req, res) => {
-    const query = 'SELECT * FROM stocks where user=22';
+    const query = 'SELECT * FROM stocks where user=25';
     
     connection.query(query, (err, results) => {
         

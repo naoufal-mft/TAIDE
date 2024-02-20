@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
-
+const path = require('path');
 const app = express();
 const encoder = bodyParser.urlencoded();
 app.use(bodyParser.json());
@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const connection= mysql.createConnection({
     host:"localhost",
     user:"root",
-    password:"1234Azer@",
+    password:"azerty",
     database:"ai_website_db"
 });
 
@@ -19,8 +19,8 @@ connection.connect(function(error){
     if (error) throw error
     else console.log("connected to the database successfully")
 })
-app.get("/",function(req,res){
-    res.sendFile("C:\\Users\\samir\\Desktop\\TRAIDE\\profile.html");
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '..', 'html', 'profile.html'));
 })
 
 app.post('/updateUserDetails', (req, res) => {
@@ -63,7 +63,7 @@ app.post('/updateUserDetails', (req, res) => {
                     }
 
                     console.log('User details updated successfully!');
-                    res.sendFile("C:\\Users\\samir\\Desktop\\TRAIDE\\profile.html");
+                    res.sendFile(path.join(__dirname, '..', 'html', 'profile.html'));
                 });
             });
         });
@@ -72,7 +72,7 @@ app.post('/updateUserDetails', (req, res) => {
 
 
 app.get('/data', (req, res) => {
-    const query = 'SELECT user.*, login.email FROM ai_website_db.user INNER JOIN ai_website_db.login ON ai_website_db.user.iduser = ai_website_db.login.id_user WHERE user.iduser = 21;';
+    const query = 'SELECT user.*, login.email FROM ai_website_db.user INNER JOIN ai_website_db.login ON ai_website_db.user.iduser = ai_website_db.login.id_user WHERE user.iduser = 25;';
     
     connection.query(query, (err, results) => {
         
@@ -99,7 +99,7 @@ app.get('/data', (req, res) => {
 
 
   app.get('/stocks', (req, res) => {
-    const query = 'SELECT stock FROM  ai_website_db.stocks WHERE user = 21;';
+    const query = 'SELECT stock FROM  ai_website_db.stocks WHERE user = 25;';
     
     connection.query(query, (err, results) => {
         
@@ -123,7 +123,7 @@ app.get('/data', (req, res) => {
 console.log(selectedStocks)
     // Assume you have a 'userStocks' table with columns 'iduser' and 'stock'
     // Delete existing stocks for the user
-    const deleteQuery = 'DELETE IGNORE FROM stocks WHERE user = 21 ';
+    const deleteQuery = 'DELETE IGNORE FROM stocks WHERE user = 25 ';
     
     // Iterate through selected stocks and execute the delete query for each
     
@@ -137,7 +137,7 @@ console.log(selectedStocks)
     // Insert new stocks for the user
     if (selectedStocks && Object.keys(selectedStocks).length !== 0 ) {
         console.log("selectedStocks.stock")
-    const insertQuery = 'INSERT INTO Stocks (user, stock) VALUES (21, ?)';
+    const insertQuery = 'INSERT INTO Stocks (user, stock) VALUES (25, ?)';
     const stocksToInsert = Array.isArray(selectedStocks.stock) ? selectedStocks.stock : [selectedStocks.stock];
     console.log(stocksToInsert);
     stocksToInsert.forEach(stock => {
@@ -151,7 +151,9 @@ console.log(selectedStocks)
     
     
 }
-    res.sendFile(__dirname + "/profile.html")
+res.writeHead(301, {
+    Location: "http://localhost:4503/"
+  }).end();
 });
 
 

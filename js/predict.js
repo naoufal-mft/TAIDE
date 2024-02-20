@@ -1,21 +1,81 @@
-window.addEventListener('load', () => {
-    // Sélection des boutons
-    const AAPLBtn = document.getElementById('AAPLBtn');
-    const TSLABtn = document.getElementById('TSLABtn');
-    const NIOBtn = document.getElementById('NIOBtn');
-    const NVDABtn = document.getElementById('NVDABtn');
+
+document.addEventListener("DOMContentLoaded", function () {
+    // la fonction fetch() est utilisée pour récupérer les données du serveur
+    fetch('/buttons') // Mettez à jour l'URL pour correspondre à votre point de terminaison serveur
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            //parse est utilisé pour convertir les données en HTML
+            document.getElementById('buttonContainer').innerHTML = data;
+            console.log("success")
+            console.log(data);
+
+            // Sélectionnez tous les boutons avec la classe ".btn.btn-primary.me-2"
+            const buttons = document.querySelectorAll('.btn.btn-primary.me-2');
+
+            // Ajoutez des gestionnaires d'événements clic à chaque bouton
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Récupérez l'ID du bouton sur lequel l'utilisateur a cliqué
+                    const action = button.id;
+                    
+                    // Appelez la fonction pour charger les fichiers CSV avec l'action correspondante
+                    chargerFichiersCSV(action);
+                    contentContainer.classList.remove('hidden-content');
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
+    });
+
+
     // Données d'entraînement initiales
     const trainingData = [];
     
     // Stocker les données prédites dans un tableau
     const predictedData = [];
-   
+
+    // Ajoutez cette fonction pour réinitialiser le tableau
+    function reinitialiserTableau() {
+        // Effacer toutes les données de la table
+        dataTable.clear().draw();
+    }
+    // Ajoutez ces fonctions pour réinitialiser les graphiques d'erreur et de prédiction
+    function reinitialiserGraphiqueErreur() {
+        // Effacer les données du graphique d'erreur
+        errorChart.data.labels = [];
+        errorChart.data.datasets[0].data = [];
+        errorChart.update();
+    }
+
+    function reinitialiserGraphiquePrediction() {
+        // Effacer les données du graphique de prédiction
+        myNewChart.data.labels = [];
+        myNewChart.data.datasets[0].data = [];
+        myNewChart.data.datasets[1].data = [];
+        myNewChart.update();
+    }
+
+    
     // Ajoutez cette fonction pour charger les fichiers CSV en fonction de l'action
     function chargerFichiersCSV(action) {
+        reinitialiserTableau();
+        reinitialiserGraphiqueErreur();
+        reinitialiserGraphiquePrediction();
+        trainingData.length = 0;
+        predictedData.length = 0;
         // Définir le chemin du fichier CSV pour l'action spécifiée
         const trainingCSVPath = `csv_files/${action}_training_data.csv`;
         const predictedCSVPath = `csv_files/${action}_predicted_prices_with_dates.csv`;
-
+      
+        
         // Charger les données d'entraînement correspondantes
         fetch(trainingCSVPath)
         .then(response => response.text())
@@ -69,23 +129,7 @@ window.addEventListener('load', () => {
             });
     }
 
-    // Ajoutez des gestionnaires d'événements clic aux boutons correspondants
-    AAPLBtn.addEventListener('click', function() {
-        chargerFichiersCSV('AAPL');
-    });
-
-    TSLABtn.addEventListener('click', function() {
-        chargerFichiersCSV('TSLA');
-    });
-
-    NIOBtn.addEventListener('click', function() {
-        chargerFichiersCSV('NIO');
-    });
-
-    NVDABtn.addEventListener('click', function() {
-        chargerFichiersCSV('NVDA');
-    });
-
+    
     // Créer le graphique initial
     const ctx = document.getElementById('myChart').getContext('2d');
 
@@ -223,13 +267,9 @@ window.addEventListener('load', () => {
 
         const newTotalPages = dataTable.page.info().pages;
         if (newTotalPages > totalPages) {
-            // Utiliser la méthode page() pour aller à la dernière page
             dataTable.page('first').draw('page');
         }
     }
-
-
-    // Créer le graphique d'erreur initial
     // Créer le graphique d'erreur initial
     const errorChartCtx = document.getElementById('errorChart').getContext('2d');
     const errorChart = new Chart(errorChartCtx, {
@@ -270,10 +310,10 @@ window.addEventListener('load', () => {
         dates.forEach((date, index) => {
             const existingIndex = errorChart.data.labels.indexOf(date);
             if (existingIndex !== -1) {
-                // Remplacer les RMSE existants par le nouveau RMSE si la date existe déjà
+                // Remplace les RMSE existants par le nouveau RMSE si la date existe déjà
                 errorChart.data.datasets[0].data[existingIndex] = rmse;
             } else {
-                // Ajouter la nouvelle date et le RMSE si la date n'existe pas déjà
+                // Ajoute la nouvelle date et le RMSE si la date n'existe pas déjà
                 errorChart.data.labels.push(date);
                 errorChart.data.datasets[0].data.push(rmse);
             }
@@ -282,7 +322,7 @@ window.addEventListener('load', () => {
         errorChart.update();
     }
 
-    // Créer le graphique pour afficher les prix prédits et réels
+    // Crée le graphique pour afficher les prix prédits et réels
     const ctx2 = document.getElementById('PredictionChart').getContext('2d');
     const myNewChart = new Chart(ctx2, {
         type: 'line',
@@ -351,8 +391,7 @@ window.addEventListener('load', () => {
         myNewChart.update();
     }
     
-
+    
 
     // Écouter les clics sur le bouton pour traiter la prochaine prédiction
     document.getElementById('nextPredictionBtn').addEventListener('click', traiterProchainePrediction);
-});

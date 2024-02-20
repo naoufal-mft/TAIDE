@@ -1,6 +1,7 @@
 //ytb video :https://www.youtube.com/watch?v=Mn0rdbJPWEo
 //author: S.SEKKOUMI
 
+const path = require('path');
 var http = require("http");
 const mysql =require("mysql2");
 const express =require("express");
@@ -15,7 +16,7 @@ app.use("/assets",express.static("assets"));
 const connection= mysql.createConnection({
     host:"localhost",
     user:"root",
-    password:"1234Azer@",
+    password:"azerty",
     database:"ai_website_db"
 });
 
@@ -24,8 +25,8 @@ connection.connect(function(error){
     else console.log("connected to the database successfully")
 })
 
-app.get("/",function(req,res){
-    res.sendFile("C:\\Users\\samir\\Desktop\\TRAIDE\\login.html");
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '..', 'html', 'login.html'));
 })
 
 app.post("/",encoder,function(req,res){
@@ -38,7 +39,7 @@ app.post("/",encoder,function(req,res){
             res.redirect("/welcome");
         }else {
             console.log("aaaaaaaaaa")
-            res.render("C:\\Users\\samir\\Desktop\\TRAIDE\\login.html", { errorMessage: "Incorrect email/password" });
+            res.render(path.join(__dirname, '..', 'html', 'login.html'), { errorMessage: "Incorrect email/password" });
 
         }
         res.end();
@@ -47,7 +48,7 @@ app.post("/",encoder,function(req,res){
 
 app.get("/welcome",function(req,res){
     res.writeHead(301, {
-        Location: "http://localhost:4003/"
+        Location: "http://localhost:4503/"
       }).end();
 })
 
