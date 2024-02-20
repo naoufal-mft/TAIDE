@@ -1,7 +1,7 @@
 //ytb video :https://www.youtube.com/watch?v=Mn0rdbJPWEo
 //author: S.SEKKOUMI
 
-
+var http = require("http");
 const mysql =require("mysql2");
 const express =require("express");
 const bodyParser= require("body-parser");
@@ -25,7 +25,7 @@ connection.connect(function(error){
 })
 
 app.get("/",function(req,res){
-    res.sendFile(__dirname + "/login.html");
+    res.sendFile("C:\\Users\\samir\\Desktop\\TRAIDE\\login.html");
 })
 
 app.post("/",encoder,function(req,res){
@@ -38,7 +38,7 @@ app.post("/",encoder,function(req,res){
             res.redirect("/welcome");
         }else {
             console.log("aaaaaaaaaa")
-            res.render(__dirname + "/login.html", { errorMessage: "Incorrect email/password" });
+            res.render("C:\\Users\\samir\\Desktop\\TRAIDE\\login.html", { errorMessage: "Incorrect email/password" });
 
         }
         res.end();
@@ -46,7 +46,9 @@ app.post("/",encoder,function(req,res){
 })
 
 app.get("/welcome",function(req,res){
-    res.sendFile(__dirname + "/home.html")
+    res.writeHead(301, {
+        Location: "http://localhost:4003/"
+      }).end();
 })
 
 app.listen(4500)

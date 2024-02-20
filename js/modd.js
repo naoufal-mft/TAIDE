@@ -20,7 +20,7 @@ connection.connect(function(error){
     else console.log("connected to the database successfully")
 })
 app.get("/",function(req,res){
-    res.sendFile(__dirname + "/profile.html");
+    res.sendFile("C:\\Users\\samir\\Desktop\\TRAIDE\\profile.html");
 })
 
 app.post('/updateUserDetails', (req, res) => {
@@ -63,7 +63,7 @@ app.post('/updateUserDetails', (req, res) => {
                     }
 
                     console.log('User details updated successfully!');
-                    res.sendFile(__dirname + "/profile.html");
+                    res.sendFile("C:\\Users\\samir\\Desktop\\TRAIDE\\profile.html");
                 });
             });
         });

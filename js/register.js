@@ -23,7 +23,7 @@ connection.connect(function(error){
     else console.log("connected to the database successfully")
 })
 app.get("/",function(req,res){
-    res.sendFile(__dirname + "/register.html");
+    res.sendFile("C:\\Users\\samir\\Desktop\\TRAIDE\\register.html");
 })
 
 app.post("/",encoder,function(req,res){
@@ -71,7 +71,7 @@ app.post("/",encoder,function(req,res){
 })
 
 app.get("/login",function(req,res){
-    res.sendFile(__dirname + "/login.html")
+    res.sendFile("C:\\Users\\samir\\Desktop\\TRAIDE\\login.html")
 })
 
 app.listen(4501)

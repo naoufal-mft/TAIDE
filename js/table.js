@@ -23,7 +23,7 @@ connection.connect(function(error){
 
 app.get("/",function(req,res){
    
-    res.sendFile("C:\\Users\\samir\\Desktop\\TRAIDE\\strat.html");
+    res.sendFile("C:\\Users\\samir\\Desktop\\TRAIDE\\table.html");
 })
 
 
@@ -45,4 +45,4 @@ app.get('/buttons', (req, res) => {
       }
     });
   });
-  app.listen(4502)
+  app.listen(4504)
