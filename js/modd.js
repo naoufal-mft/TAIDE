@@ -20,7 +20,7 @@ const connection= mysql.createConnection({
 const sessionStore = new MySQLStore({
     host: "localhost",
     user: "root",
-    password: "1234Azer@",
+    password: "azerty",
     database: "ai_website_db"
 });
 app.use(session({
@@ -173,7 +173,22 @@ res.writeHead(301, {
 
 
 
-
+app.get('/username', (req, res) => {
+    const query = 'SELECT * FROM user where iduser= ?';
+    
+    connection.query(query, req.session.username,(err, results) => {
+        
+      if (err) {
+        console.error('Error executing MySQL query:', err);
+        res.status(500).send('Internal Server Error');
+      } else {
+        
+        // Process the results and send them to the client
+        
+        res.send(results[0].username);
+      }
+    });
+  });
 
 app.listen(4503, () => {
     console.log('Server is running on port 4502');

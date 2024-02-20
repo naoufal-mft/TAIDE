@@ -6,8 +6,7 @@ const express =require("express");
 const app=express();
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
-app.set("view engine", "ejs");
-app.engine('html', require('ejs').renderFile);
+
 
 app.use("/assets",express.static("assets"));
 app.use("/css",express.static("css"));
@@ -23,7 +22,7 @@ const connection= mysql.createConnection({
 const sessionStore = new MySQLStore({
   host: "localhost",
   user: "root",
-  password: "1234Azer@",
+  password: "azerty",
   database: "ai_website_db"
 });
 app.use(session({
@@ -58,6 +57,22 @@ app.get('/buttons', (req, res) => {
         const buttons = results.map(result => `<button class="btn btn-primary me-2" id="${result.stock}">${result.stock}</button>`);
         console.log(buttons[0]);
         res.send(buttons.join('\n'));
+      }
+    });
+  });
+  app.get('/username', (req, res) => {
+    const query = 'SELECT * FROM user where iduser= ?';
+    
+    connection.query(query, req.session.username,(err, results) => {
+        
+      if (err) {
+        console.error('Error executing MySQL query:', err);
+        res.status(500).send('Internal Server Error');
+      } else {
+        
+        // Process the results and send them to the client
+        
+        res.send(results[0].username);
       }
     });
   });

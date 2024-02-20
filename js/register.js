@@ -7,8 +7,7 @@ const bodyParser= require("body-parser");
 const app=express();
 
 const encoder = bodyParser.urlencoded();
-app.set("view engine", "ejs");
-app.engine('html', require('ejs').renderFile);
+
 
 app.use("/assets",express.static("assets"));
 const connection= mysql.createConnection({

@@ -1,3 +1,4 @@
+ <!-- @author: ELMOUDEN Mehdi-->
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 
@@ -5,10 +6,69 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Blank Page - Brand</title>
+    <!-- Fonts and CSS -->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:...&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/css/Bootstrap-4---Payment-Form.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.stock.min.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="assets/js/bs-init.js"></script>
+    
+    <script src="assets/js/theme.js"></script>
+
+
+    <style>
+        .action-select-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .action-select-container select {
+            width: 200px;
+            height: 40px;
+            font-size: 16px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .action-select-container button {
+            height: 40px;
+            font-size: 16px;
+            padding: 5px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .action-select-container button:hover {
+            background-color: #0056b3;
+        }
+        .graph-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        @keyframes pulseAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .buttonPulse {
+            animation: pulseAnimation 2s infinite;
+        }
+
+    </style>
 </head>
 
 <body id="page-top">
@@ -20,79 +80,524 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link" href="http://localhost:4505"><i class="fas fa-tachometer-alt"></i><span>Home Page</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="http://localhost:4505"><i class="fas fa-tachometer-alt"></i><span>Page d'accueil</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="http://localhost:4503"><i class="fas fa-user"></i><span>Profil</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="http://localhost:4504"><i class="fas fa-table"></i><span>Recommandations</span></a></li>
                     <li class="nav-item"><a class="nav-link active" href="http://localhost:4502"><i class="fas fa-bullseye"></i><span>Stratégies et sentiments</span></a></li>
                     <li class="nav-item"></li>
                 </ul>
-                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
         </nav>
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">
                     <div class="container-fluid">
-                       <div class="container-fluid" id="buttonContainer">
-                            <!-- The dynamically generated buttons will be added here -->
+                        <div class="navbar-brand" style="display: flex; align-items: center;">
+                            <img src="assets/img/stocks/apple.png" alt="Image 1" style="height: 30px; margin-right: 10px;">
+                            <img src="assets/img/stocks/TSLA.png" alt="Image 2" style="height: 30px; margin-right: 10px;">
+                            <img src="assets/img/stocks/nio.png" alt="Image 3" style="height: 30px; margin-right: 10px;">
+                            <img src="assets/img/stocks/plug.png" alt="Image 4" style="height: 30px; margin-right: 10px;">
                         </div>
                         <ul class="navbar-nav flex-nowrap ms-auto">
-                            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
-                                <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in" aria-labelledby="searchDropdown">
-                                    <form class="me-auto navbar-search w-100">
-                                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Recherche de ...">
-                                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </li>
                             <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">Utilisateur</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar5.jpeg"></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profil</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Paramètres</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activité</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Se déconnecter</a>
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" id="thename"></span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar5.jpg"></a>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="http://localhost:4500"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Se déconnecter</a>
                                     </div>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </nav>
-                <div class="container-fluid">
-                    <h3 class="text-dark mb-1">Stratégies et sentiments</h3>
-                </div>
+                <div class="container-fluid" style="margin-bottom: 20px;">
+    <h3 class="text-dark mb-4">Stratégies et Sentiments</h3>
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold" id="tableTitle">Tableau de Sentiments</p>
+            <div class="action-select-container" style="margin-top: 20px;">
+                <select id="actionSelector" class="form-select">
+                    <option value="AAPL">AAPL</option>
+                    <option value="TSLA">TSLA</option>
+                    <option value="NIO">NIO</option>
+                    <option value="NVDA">NVDA</option>
+                </select>
+                <button onclick="loadSelectedActionData()" class="btn btn-primary mt-2" id="loadDataButton">Charger les données</button>
             </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Brand 2023</span></div>
-                </div>
-            </footer>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive table mt-2">
+                <table class="table my-0" id="sentimentTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Nombre Totale de Commentaires</th>
+                            <th>Sentiment Positif (%)</th>
+                            <th>Sentiment Négatif (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sentiment-table-body"></tbody>
+                </table>
+            </div>                        
+        </div>
+    </div>
+</div>
+<div class="card shadow" style="margin-bottom: 20px;">
+<div class="action-select-container" style="margin-top: 20px; margin-bottom: 20px;">
+
+
+            <div class="graph-container">
+                <div id="chartContainer" style="height: 600px; width: 100%; margin-top: 20px;"></div>
+                <div id="macdChartContainer" style="height: 600px; width: 100%; margin-top: 20px;"></div>
+            </div>
+
+
+    
+
+
+
+
+
+            
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
+
+
+
+
+    
+
+
+
+
+
+    
+
     <script>
+
+
+    function loadSelectedActionData(selectedSymbol) {
+        const loadDataButton = document.getElementById('loadDataButton');
+        loadDataButton.innerHTML = 'Chargement...'; // Modifier le texte du bouton
+        loadDataButton.disabled = true; // Désactiver le bouton pendant le chargement
+
+        // Simuler le chargement des données (remplacez cela par votre logique de chargement réelle)
+        setTimeout(() => {
+            console.log(`Données pour ${selectedSymbol} chargées`);
+            loadDataButton.innerHTML = 'Charger les données'; // Restaurer le texte du bouton
+            loadDataButton.disabled = false; // Réactiver le bouton
+        }, 1000); // Simule un délai de chargement de 2 secondes
+
+
+    
+        // Assurez-vous que selectedSymbol est bien le symbole et non 'undefined'
+        if (!selectedSymbol) {
+            selectedSymbol = document.getElementById('actionSelector').value;
+        }
+        loadAndParseCSV(selectedSymbol); 
+        loadChartData(selectedSymbol);// Charge les données pour le symbole sélectionné
+        loadMACDChartData(selectedSymbol); // Charge les données MACD pour le symbole sélectionné
+
+        // Met à jour le titre du tableau pour inclure le symbole de l'action sélectionnée
+        document.getElementById('tableTitle').textContent = `Tableau de Sentiments pour ${selectedSymbol}`;
+
+    }
+
+
+
+
+    // Fonction pour charger le fichier CSV et passer les données parsées à displaySentimentsData
+    function loadAndParseCSV(selectedSymbol) {
+        var filePath = "data_sentiment/" + selectedSymbol + "_percentage.csv"; // Construit le chemin d'accès au fichier CSV
+        Papa.parse(filePath, {
+            download: true,
+            header: true,
+            dynamicTyping: true, // Convertit automatiquement les chaînes de nombres en types numériques
+            skipEmptyLines: true,
+            quotes: true, // Set to true if your fields are quoted and you have commas in your data
+            newline: "\n", // Adjust the newline character if it's not the standard '\n'
+            complete: function(results) {
+                if (results.errors.length > 0) {
+                    console.error("Erreur lors du chargement du fichier CSV :", results.errors);
+                    alert("Erreur lors du chargement du fichier CSV. Voir la console pour plus de détails.");
+                    return;
+                }
+                displaySentimentsData(results.data);
+                
+            },
+            error: function(err) {
+                console.error("Erreur lors du parsing CSV :", err);
+                alert("Erreur lors du parsing du fichier CSV. Voir la console pour plus de détails.");
+            }
+
+        });
+
+    }
+
+    // Fonction pour afficher les données de sentiments dans le tableau
+    function displaySentimentsData(sentimentsData) {
+    console.log(sentimentsData); // Debugging pour vérifier les données
+
+    if ($.fn.DataTable.isDataTable('#sentimentTable')) {
+        // Si DataTables est déjà initialisé, mettez simplement à jour ses données.
+        var table = $('#sentimentTable').DataTable();
+        table.clear(); // Efface toutes les données existantes
+        table.rows.add(sentimentsData); // Ajoute les nouvelles données
+        table.draw(); // Redessine le tableau avec les nouvelles données
+    } else {
+        // Si DataTables n'est pas initialisé, créez-le avec les données.
+        $('#sentimentTable').DataTable({
+            data: sentimentsData,
+            language: {
+                search: "Rechercher :",
+                lengthMenu: "Afficher _MENU_ lignes par page",
+                zeroRecords: "Aucune donnée trouvée",
+                info: "Page _PAGE_ de _PAGES_",
+                infoEmpty: "Aucune donnée disponible",
+                infoFiltered: "(filtré de _MAX_ lignes totales)",
+                paginate: {
+                    first: "Premier",
+                    last: "Dernier",
+                    next: "Suivant",
+                    previous: "Précédent"
+                }
+            },
+            columns: [
+                { title: "Date", data: 'Date' },
+                { title: "Nombre Totale de Commentaires", data: 'Total_Comments' },
+                { title: "Sentiment Positif (%)", data: 'Positive_Percentage' },
+                { title: "Sentiment Négatif (%)", data: 'Negative_Percentage' }
+            ],
+
+            destroy: true // Cela permet de réinitialiser DataTables si nécessaire
+        });
+    }
+}
+
+
+    
+
+
+
+
+
+    function processData(results) {
+        var dataPoints = results.data.map(data => ({
+            x: new Date(data.date),
+            y: Number(data.close),
+            sma: Number(data.sma_20),
+            upperBand: Number(data.upper_bb),
+            lowerBand: Number(data.lower_bb),
+            markerType: "circle",
+            toolTipContent: "Date: {x}, Fermeture: {y}, SMA: {sma}, Bande Supérieure: {upperBand}, Bande Inférieure: {lowerBand}",
+            click: function(e) {
+                alert("Date: " + e.dataPoint.x + " Fermeture: " + e.dataPoint.y + " SMA: " + e.dataPoint.sma + " Bande Supérieure: " + e.dataPoint.upperBand + " Bande Inférieure: " + e.dataPoint.lowerBand);
+            }
+        }));
+
+        var smaData = results.data.map(data => ({ x: new Date(data.date), y: Number(data.sma_20) }));
+        var upperBandData = results.data.map(data => ({ x: new Date(data.date), y: Number(data.upper_bb) }));
+        var lowerBandData = results.data.map(data => ({ x: new Date(data.date), y: Number(data.lower_bb) }));
+
+        // Préparation des signaux d'achat et de vente
+        var buySignals = results.data.filter(data => data.merged_signal === 'buy').map(data => ({
+            x: new Date(data.date),
+            y: Number(data.close),
+            markerType: "triangle",
+            markerColor: "green",
+            markerSize: 10
+        }));
+
+        var sellSignals = results.data.filter(data => data.merged_signal === 'sell').map(data => ({
+            x: new Date(data.date),
+            y: Number(data.close),
+            markerType: "cross",
+            markerColor: "red",
+            markerSize: 10
+        }));
+
+        return { dataPoints, smaData, upperBandData, lowerBandData, buySignals, sellSignals };
+    }  
+    function createStockChart(chartData){
+        var stockChart = new CanvasJS.StockChart("chartContainer", {
+                    title: {
+                        text: "Bandes de Bollinger avec Signaux d'Achat et de Vente"
+                    },
+                    toolTip:{
+                        shared: true,
+                        contentFormatter: function(e) {
+                            var content = "<div style='padding:5px; max-width:200px; background-color: #f9f9f9; border: 1px solid #dcdcdc;'>";
+                            // Ajoutez la date une seule fois car elle est commune à toutes les séries
+                            content += "Date: " + CanvasJS.formatDate(e.entries[0].dataPoint.x, "DD MMM YYYY") + "<br/>";
+                            e.entries.forEach(function(entry) {
+                                content += "<span style='color: " + entry.dataSeries.color + ";'>" + entry.dataSeries.name + ": </span>";
+                                content += "<strong>" + entry.dataPoint.y + "</strong><br/>";
+                            });
+                            content += "</div>";
+                            return content;
+                        
+                        }
+                    },
+                    charts: [{
+                        data: [{
+                            type: "candlestick",
+                            name: "Prix de Clôture",
+                            yValueFormatString: "$#,###.##",
+                            toolTipContent: "Date: {x}<br/>Ouverture: {y[0]}, Haut: {y[1]}, Bas: {y[2]}, Clôture: {y[3]}",
+                            dataPoints: chartData.dataPoints
+                        }, {
+                            type: "line",
+                            name: "SMA",
+                            toolTipContent: "Date: {x}<br/>SMA: {y}",
+                            dataPoints: chartData.smaData,
+                            showInLegend: true
+                        }, {
+                            type: "line",
+                            name: "Bande Supérieure",
+                            toolTipContent: "Date: {x}<br/>Bande Supérieure: {y}",
+                            dataPoints: chartData.upperBandData,
+                            showInLegend: true
+                        }, {
+                            type: "line",
+                            name: "Bande Inférieure",
+                            toolTipContent: "Date: {x}<br/>Bande Inférieure: {y}",
+                            dataPoints: chartData.lowerBandData,
+                            showInLegend: true
+                        }, {
+                            type: "scatter",
+                            name: "Signaux d'Achat",
+                            color: "green",
+                            markerSize: 6,
+                            toolTipContent: "Date: {x}<br/>Signal d'Achat",
+                            dataPoints: chartData.buySignals,
+                            showInLegend: true
+                        }, {
+                            type: "scatter",
+                            name: "Signaux de Vente",
+                            color: "#E24D42",
+                            markerSize: 6,
+                            toolTipContent: "Date: {x}<br/>Signal de Vente",
+                            dataPoints: chartData.sellSignals,
+                            showInLegend: true
+                        }]
+                    }],
+                    navigator: {
+                        slider: {
+                            minimum: new Date(chartData.dataPoints[0].x),
+                            maximum: new Date(chartData.dataPoints[chartData.dataPoints.length - 1].x)
+                        }
+                    }
+                });
+                stockChart.render();
+            
+
+    }  
+
+    function loadChartData() {
+        var actionSymbol = document.getElementById('actionSelector').value;
+        var csvFileName = "data_bb/" + actionSymbol + "_bb.csv";
+
+        Papa.parse(csvFileName, { // Assurez-vous d'utiliser le bon chemin d'accès
+            download: true,
+            header: true,
+            dynamicTyping: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                var chartData = processData(results);
+                createStockChart(chartData);
+                }
+        });    
+
+            
+                
+    }
+    // Gestionnaire d'événements pour le bouton de chargement
+    document.addEventListener("DOMContentLoaded", function() {
+
+    // Attacher l'écouteur d'événements au bouton de chargement
+        document.getElementById('loadDataButton').addEventListener('click', function() {
+            var selectedSymbol = document.getElementById('actionSelector').value;
+            loadSelectedActionData(selectedSymbol);
+        });
+    });
+
+    document.getElementById('actionSelector').addEventListener('change', function() {
+        const loadDataButton = document.getElementById('loadDataButton');
+        loadDataButton.disabled = false;
+        loadDataButton.classList.add('buttonPulse'); // Ajouter la classe d'animation
+    });
+
+    
+
+
+
+
+
+
+    function processMACDData(results) {
+        var macdData = results.data.map(data => ({
+            x: new Date(data.date),
+            y: Number(data.macd),
+            signalLine: Number(data.signalLine),
+            hist: Number(data.hist),
+            toolTipContent: "Date: {x}, MACD: {y}, Ligne de signal: {signalLine}, Histogramme: {hist}"
+        }));
+
+        var signalLineData = results.data.map(data => ({
+            x: new Date(data.date),
+            y: Number(data.signal_line),
+            toolTipContent: "Date: {x}, Ligne de signal: {y}"
+        }));
+
+        var histData = results.data.map(data => ({
+            x: new Date(data.date),
+            y: Number(data.hist),
+            toolTipContent: "Date: {x}, Ligne de signal: {y}"
+        }));
+
+        // Extraire les signaux d'achat et de vente
+        var buySignals = results.data.filter(data => data.merged_signal === 'buy').map(data => ({
+            x: new Date(data.date),
+            y: Number(data.macd),
+            indexLabel: "B", // Marqueur pour les signaux d'achat
+            markerType: "triangle", // Ou tout autre type de marqueur de votre choix
+            markerColor: "green",
+            markerSize: 10,
+            toolTipContent: "Achat - Date: {x}, Prix: {y}"
+        }));
+
+        var sellSignals = results.data.filter(data => data.merged_signal === 'sell').map(data => ({
+            x: new Date(data.date),
+            y: Number(data.macd),
+            indexLabel: "S", // Marqueur pour les signaux de vente
+            markerType: "cross", // Ou tout autre type de marqueur de votre choix
+            markerColor: "red",
+            markerSize: 10,
+            toolTipContent: "Vente - Date: {x}, Prix: {y}"
+        }));
+
+
+        return { macdData, signalLineData, histData, buySignals, sellSignals };
+    }
+    
+
+    function createMACDChart(chartData) {
+        var macdChart = new CanvasJS.StockChart("macdChartContainer", {
+            title: {
+                text: "MACD avec Signal Line"
+            },
+            toolTip: {
+                shared: true,
+                contentFormatter: function(e) {
+                    var content = "<div style='padding:5px; max-width:200px; background-color: #f9f9f9; border: 1px solid #dcdcdc;'>";
+                    for (var i = 0; i < e.entries.length; i++) {
+                        content += "<span style='color: " + e.entries[i].dataSeries.color + ";'>" + e.entries[i].dataSeries.name + ": </span>";
+                        content += "<strong>" + e.entries[i].dataPoint.y + "</strong><br/>";
+                    }
+                    content += "</div>";
+                    return content;
+                }
+            },
+            charts: [{
+                data: [{
+                    type: "line",
+                    name: "MACD",
+                    dataPoints: chartData.macdData,
+                    showInLegend: true,
+                    toolTipContent: "Date: {x}, MACD: {y}"
+                }, {
+                    type: "line",
+                    name: "Signal Line",
+                    showInLegend: true,
+                    toolTipContent: "Date: {x}, Signal: {y}",
+                    dataPoints: chartData.signalLineData
+                }, {
+                    type: "column", // Représentation de l'histogramme
+                    name: "Histogramme",
+                    dataPoints: chartData.histData,
+                    showInLegend: true,
+                    toolTipContent: "Date: {x}, Histogramme: {y}"
+                }, {
+                    type: "scatter",
+                    name: "Achat",
+                    dataPoints: chartData.buySignals,
+                    showInLegend: true,
+                    toolTipContent: "Achat - Date: {x}, Prix: {y}"
+                }, {
+                    type: "scatter",
+                    name: "Vente",
+                    dataPoints: chartData.sellSignals,
+                    showInLegend: true,
+                    toolTipContent: "Vente - Date: {x}, Prix: {y}"
+                }]
+            }],
+            navigator: {
+                slider: {
+                    minimum: new Date(chartData.macdData[0].x),
+                    maximum: new Date(chartData.macdData[chartData.macdData.length - 1].x)
+                }
+            }
+        });
+        macdChart.render();
+
+    }
+
+
+
+
+
+    function loadMACDChartData() {
+        var actionSymbol = document.getElementById('actionSelector').value;
+        var csvFileName = "data_macd/" + actionSymbol + "_MACD_final.csv";
+
+        Papa.parse(csvFileName, {
+            download: true,
+            header: true,
+            dynamicTyping: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                var chartData = processMACDData(results);
+                createMACDChart(chartData);
+            }
+        });
+    }
+
+    
+
+
+
+
+    
+    </script>
+
+
+<script>
     //author: S.SEKKOUMI
     // Wait for the DOM to be ready
     document.addEventListener("DOMContentLoaded", function () {
         // Fetch data from your server using Fetch API
-        fetch('/buttons') // Update the URL to match your server endpoint
+        fetch('/username') // Update the URL to match your server endpoint
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 return response.text();
             })
-            .then(data => {
+            .then(username => {
                 // Parse the data as HTML and append it to the buttonContainer
-                document.getElementById('buttonContainer').innerHTML = data;
-                console.log("success")
+                const usernameElement =document.getElementById('thename');
+                usernameElement.textContent = username;
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
     });
 </script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
-    <script src="assets/js/Bootstrap-4---Payment-Form-script.js"></script>
-    <script src="assets/js/theme.js"></script>
+<footer class="bg-white sticky-footer">
+    <div class="container my-auto">
+        <div class="text-center my-auto copyright"><span>Copyright © MEFTAHI 2023</span></div>
+    </div>
+</footer>
+
 </body>
 
 </html>

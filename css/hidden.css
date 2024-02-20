@@ -1,15 +1,21 @@
+/* @author: MEFTAHI Naoufal */
+
 .hidden-content {
     display: none;
 }
 /* Styles CSS pour les couleurs des colonnes */
-.table tbody tr td:nth-child(2) {
+.display tbody tr td:nth-child(2) {
     color: red; /* Texte en rouge pour la colonne "Prix prédits" */
 }
 
-.table tbody tr td:nth-child(3) {
+.display tbody tr td:nth-child(3) {
     color: green; /* Texte en vert pour la colonne "Prix réels" */
 }
 
-.table tbody tr td:nth-child(4) {
+.display tbody tr td:nth-child(4) {
     color: blue; /* Texte en bleu pour la colonne "Prix de clôture" */
+}
+.active-button {
+    background-color: green; /* Définissez la couleur de fond des boutons actifs selon vos préférences */
+    color: white; /* Définissez la couleur du texte des boutons actifs */
 }

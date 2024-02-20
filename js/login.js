@@ -11,8 +11,7 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 
 const encoder = bodyParser.urlencoded();
-app.set("view engine", "ejs");
-app.engine('html', require('ejs').renderFile);
+
 
 app.use("/assets",express.static("assets"));
 const connection= mysql.createConnection({
@@ -24,7 +23,7 @@ const connection= mysql.createConnection({
 const sessionStore = new MySQLStore({
     host:"localhost",
     user:"root",
-    password:"1234Azer@",
+    password:"azerty",
     database:"ai_website_db",
     clearExpired: true,
 });

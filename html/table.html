@@ -1,3 +1,4 @@
+ <!-- @author: MEFTAHI Naoufal -->
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 
@@ -26,30 +27,33 @@
                     <li class="nav-item"><a class="nav-link active" href="http://localhost:4504"><i class="fas fa-table"></i><span>Recommandations</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="http://localhost:4502"><i class="fas fa-bullseye"></i><span>Stratégies et sentiments</span></a></li>
                 </ul>
-                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
+                
             </div>
         </nav>
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">
                     <div class="container-fluid">
+                        <div class="navbar-brand" style="display: flex; align-items: center;">
+                            <img src="assets/img/stocks/apple.png" alt="Image 1" style="height: 30px; margin-right: 10px;">
+                            <img src="assets/img/stocks/TSLA.png" alt="Image 2" style="height: 30px; margin-right: 10px;">
+                            <img src="assets/img/stocks/nio.png" alt="Image 3" style="height: 30px; margin-right: 10px;">
+                            <img src="assets/img/stocks/plug.png" alt="Image 4" style="height: 30px; margin-right: 10px;">
+                        </div>
+                        <div class="navbar-brand" style="display: flex; align-items: center; height: 100%;">
+                            <p style="text-shadow: 0 0 20px #00ccff, 2px 3px 3px #14141431, 0 0 100px #00bbd4; color: #008cff; font-size: 20px; font-weight: bold; margin: auto;">
+                                Vos stocks préférés:
+                            </p>
+                        </div>
                         <div class="container-fluid" id="buttonContainer">
                             <!-- The dynamically generated buttons will be added here -->
                         </div>
                         <ul class="navbar-nav flex-nowrap ms-auto">
-                            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
-                                <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in" aria-labelledby="searchDropdown">
-                                    <form class="me-auto navbar-search w-100">
-                                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Recherche de ...">
-                                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </li>
+                            
                             <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">Utilisateur</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar5.jpeg"></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profil</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Paramètres</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activité</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Se déconnecter</a>
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" id="thename"></span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar5.jpg"></a>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="http://localhost:4500"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Se déconnecter</a>
                                     </div>
                                 </div>
                             </li>
@@ -136,6 +140,28 @@
                     // Parse the data as HTML and append it to the buttonContainer
                     document.getElementById('buttonContainer').innerHTML = data;
                     console.log("success")
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        });
+    </script>
+    <script>
+        //author: S.SEKKOUMI
+        // Wait for the DOM to be ready
+        document.addEventListener("DOMContentLoaded", function () {
+            // Fetch data from your server using Fetch API
+            fetch('/username') // Update the URL to match your server endpoint
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(username => {
+                    // Parse the data as HTML and append it to the buttonContainer
+                    const usernameElement =document.getElementById('thename');
+                    usernameElement.textContent = username;
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);

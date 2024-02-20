@@ -1,3 +1,4 @@
+ <!-- @author: MEFTAHI Naoufal -->
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en" style="padding-top: 75px;">
 
@@ -31,9 +32,10 @@
                                 <div class="row mb-3">
                                     <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Adresse mail" name="email"></div>
                                     <div class="col-sm-6"><input class="form-control form-control-user" type="text" id="exempleUsername" placeholder="Username" name="username"></div>
-                                </div>                                <div class="row mb-3">
-                                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="password" id="examplePasswordInput" placeholder="Mot de passe" name="password"></div>
-                                    <div class="col-sm-6"><input class="form-control form-control-user" type="password" id="exampleRepeatPasswordInput" placeholder="Confirmer le mot de passe" name="password_repeat"></div>
+                                </div>                                
+                                <div class="row mb-3">
+                                    <div class="col-sm-12 mb-3 mb-sm-0"><input class="form-control form-control-user" type="password" id="examplePasswordInput" placeholder="Mot de passe" name="password"></div>
+                                    
                                 </div>
                                 <hr><label class="form-label">Vos Stocks Préférés</label>
                                 <ul class="list-group">
@@ -41,20 +43,20 @@
                                         <div class="form-check"><input class="form-check-input" name="checkbox" type="checkbox" id="formCheck-1" value="AAPL"><label class="form-check-label" for="formCheck-1">AAPL</label></div>
                                     </li>
                                     <li class="list-group-item">
-                                        <div class="form-check"><input class="form-check-input" name="checkbox" type="checkbox" id="formCheck-2" value="AMZN"><label class="form-check-label" for="formCheck-2">TSLA</label></div>
+                                        <div class="form-check"><input class="form-check-input" name="checkbox" type="checkbox" id="formCheck-2" value="TSLA"><label class="form-check-label" for="formCheck-2">TSLA</label></div>
                                     </li>
                                     <li class="list-group-item">
-                                        <div class="form-check"><input class="form-check-input" name="checkbox" type="checkbox" id="formCheck-3" value="TSLA"><label class="form-check-label" for="formCheck-3">PLUG</label></div>
+                                        <div class="form-check"><input class="form-check-input" name="checkbox" type="checkbox" id="formCheck-3" value="PLUG"><label class="form-check-label" for="formCheck-3">PLUG</label></div>
                                     </li>
                                     <li class="list-group-item">
-                                        <div class="form-check"><input class="form-check-input" name="checkbox" type="checkbox" id="formCheck-4" value="META"><label class="form-check-label" for="formCheck-4">NIO</label></div>
+                                        <div class="form-check"><input class="form-check-input" name="checkbox" type="checkbox" id="formCheck-4" value="NIO"><label class="form-check-label" for="formCheck-4">NIO</label></div>
                                     </li>
                                 </ul>
                                 <hr><button class="btn btn-primary d-block btn-user w-100" type="submit">S'enregistrer</button>
                                 <hr>
                             </form>
-                            <div class="text-center"><a class="small" href="forgot-password.html">mot de passe oublié?</a></div>
-                            <div class="text-center"><a class="small" href="http://localhost:4500/">Vous avez un compte déjà? Se connecter!</a></div>
+                            <div class="text-center"><a class="small" href="forgot-password.html">Mot de passe oublié?</a></div>
+                            <div class="text-center"><a class="small" href="http://localhost:4500/">Vous avez déjà un compte? Se connecter!</a></div>
                         </div>
                     </div>
                 </div>
@@ -63,6 +65,7 @@
     </div>
 
     <script>
+        //@Author: SEKKOUMI Samir
         const fs = require('fs');
 
         function registerUser() {

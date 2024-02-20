@@ -1,3 +1,4 @@
+//@author: MEFTAHI Naoufal
 
 document.addEventListener("DOMContentLoaded", function () {
     // la fonction fetch() est utilisée pour récupérer les données du serveur
@@ -20,6 +21,12 @@ document.addEventListener("DOMContentLoaded", function () {
             // Ajoutez des gestionnaires d'événements clic à chaque bouton
             buttons.forEach(button => {
                 button.addEventListener('click', function() {
+                    buttons.forEach(btn => {
+                        btn.classList.remove('active-button');
+                    });
+        
+                    // Ajoutez la classe active au bouton cliqué
+                    button.classList.add('active-button');
                     // Récupérez l'ID du bouton sur lequel l'utilisateur a cliqué
                     const action = button.id;
                     
@@ -172,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     beginAtZero: false,
                     title: {
                         display: true,
-                        text: 'Prix  en $'
+                        text: 'Prix en $'
                     }
                 }
             },
@@ -238,6 +245,7 @@ document.addEventListener("DOMContentLoaded", function () {
         language: {
             url: "assets/Datatables/French.json"
         },
+        
         
         
         
