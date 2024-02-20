@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const path = require('path');
 const app = express();
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
+
 const encoder = bodyParser.urlencoded();
 app.use(bodyParser.json());
 app.use("/assets",express.static("assets"));
@@ -14,7 +17,18 @@ const connection= mysql.createConnection({
     password:"azerty",
     database:"ai_website_db"
 });
-
+const sessionStore = new MySQLStore({
+    host: "localhost",
+    user: "root",
+    password: "1234Azer@",
+    database: "ai_website_db"
+});
+app.use(session({
+    secret: 'dfr324567u6uhbfgfgh8iijmn',
+    resave: false,
+    saveUninitialized: false,
+    store: sessionStore,
+  }));
 connection.connect(function(error){
     if (error) throw error
     else console.log("connected to the database successfully")
@@ -36,7 +50,7 @@ app.post('/updateUserDetails', (req, res) => {
         }
 
         // Update user table
-        connection.query('UPDATE user SET nom=?, prenom=? WHERE username=?', [first_name, last_name, username], function (error, results, fields) {
+        connection.query('UPDATE user SET nom=?, prenom=? , username=? WHERE iduser=?', [first_name, last_name, username,req.session.username], function (error, results, fields) {
             if (error) {
                 return connection.rollback(function () {
                     console.error('Error updating user table:', error);
@@ -45,7 +59,7 @@ app.post('/updateUserDetails', (req, res) => {
             }
 
             // Update login table
-            connection.query('UPDATE login SET email=? WHERE id_user = (SELECT iduser FROM user WHERE username=?)', [email, username], function (error, results, fields) {
+            connection.query('UPDATE login SET email=? WHERE id_user = ?', [email, req.session.username], function (error, results, fields) {
                 if (error) {
                     return connection.rollback(function () {
                         console.error('Error updating login table:', error);
@@ -72,9 +86,9 @@ app.post('/updateUserDetails', (req, res) => {
 
 
 app.get('/data', (req, res) => {
-    const query = 'SELECT user.*, login.email FROM ai_website_db.user INNER JOIN ai_website_db.login ON ai_website_db.user.iduser = ai_website_db.login.id_user WHERE user.iduser = 25;';
+    const query = 'SELECT user.*, login.email FROM ai_website_db.user INNER JOIN ai_website_db.login ON ai_website_db.user.iduser = ai_website_db.login.id_user WHERE user.iduser = ? ;';
     
-    connection.query(query, (err, results) => {
+    connection.query(query,[req.session.username], (err, results) => {
         
       if (err) {
         console.error('Error executing MySQL query:', err);
@@ -99,9 +113,9 @@ app.get('/data', (req, res) => {
 
 
   app.get('/stocks', (req, res) => {
-    const query = 'SELECT stock FROM  ai_website_db.stocks WHERE user = 25;';
+    const query = 'SELECT stock FROM  ai_website_db.stocks WHERE user = ?;';
     
-    connection.query(query, (err, results) => {
+    connection.query(query,[req.session.username], (err, results) => {
         
       if (err) {
         console.error('Error executing MySQL query:', err);
@@ -123,11 +137,11 @@ app.get('/data', (req, res) => {
 console.log(selectedStocks)
     // Assume you have a 'userStocks' table with columns 'iduser' and 'stock'
     // Delete existing stocks for the user
-    const deleteQuery = 'DELETE IGNORE FROM stocks WHERE user = 25 ';
+    const deleteQuery = 'DELETE IGNORE FROM stocks WHERE user = ? ';
     
     // Iterate through selected stocks and execute the delete query for each
     
-        connection.query(deleteQuery, (deleteError, deleteResults) => {
+        connection.query(deleteQuery,[req.session.username], (deleteError, deleteResults) => {
             if (deleteError) {
                 return res.status(500).json({ error: 'Error deleting user stocks' });
             }
@@ -137,12 +151,12 @@ console.log(selectedStocks)
     // Insert new stocks for the user
     if (selectedStocks && Object.keys(selectedStocks).length !== 0 ) {
         console.log("selectedStocks.stock")
-    const insertQuery = 'INSERT INTO Stocks (user, stock) VALUES (25, ?)';
+    const insertQuery = 'INSERT INTO Stocks (user, stock) VALUES (?, ?)';
     const stocksToInsert = Array.isArray(selectedStocks.stock) ? selectedStocks.stock : [selectedStocks.stock];
     console.log(stocksToInsert);
     stocksToInsert.forEach(stock => {
         //console.log(stock);
-        connection.query(insertQuery, [ stock], (insertError, insertResults) => {
+        connection.query(insertQuery, [ [req.session.username],stock], (insertError, insertResults) => {
             if (insertError) {
                 return res.status(500).json({ error: 'Error inserting user stocks' });
             }
