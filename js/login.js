@@ -7,6 +7,8 @@ const mysql =require("mysql2");
 const express =require("express");
 const bodyParser= require("body-parser");
 const app=express();
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 
 const encoder = bodyParser.urlencoded();
 app.set("view engine", "ejs");
@@ -19,7 +21,19 @@ const connection= mysql.createConnection({
     password:"azerty",
     database:"ai_website_db"
 });
-
+const sessionStore = new MySQLStore({
+    host:"localhost",
+    user:"root",
+    password:"1234Azer@",
+    database:"ai_website_db",
+    clearExpired: true,
+});
+app.use(session({
+  secret: 'dfr324567u6uhbfgfgh8iijmn',
+  resave: false,
+  saveUninitialized: false,
+  store: sessionStore,
+}));
 connection.connect(function(error){
     if (error) throw error
     else console.log("connected to the database successfully")
@@ -36,6 +50,7 @@ app.post("/",encoder,function(req,res){
         if (error) throw error;
         if(results.length> 0){
             console.log("check1")
+            req.session.username = results[0].id_user;
             res.redirect("/welcome");
         }else {
             console.log("aaaaaaaaaa")
