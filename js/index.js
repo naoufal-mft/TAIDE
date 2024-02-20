@@ -4,7 +4,8 @@ const path = require('path');
 const mysql =require("mysql2");
 const express =require("express");
 const app=express();
-
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 app.set("view engine", "ejs");
 app.engine('html', require('ejs').renderFile);
 
@@ -19,7 +20,18 @@ const connection= mysql.createConnection({
     password:"azerty",
     database:"ai_website_db"
 });
-
+const sessionStore = new MySQLStore({
+  host: "localhost",
+  user: "root",
+  password: "1234Azer@",
+  database: "ai_website_db"
+});
+app.use(session({
+  secret: 'dfr324567u6uhbfgfgh8iijmn',
+  resave: false,
+  saveUninitialized: false,
+  store: sessionStore,
+}));
 connection.connect(function(error){
     if (error) throw error
     else console.log("connected to the database successfully")
@@ -33,9 +45,9 @@ app.get("/",function(req,res){
 
 // Modify the '/buttons' route handler
 app.get('/buttons', (req, res) => {
-    const query = 'SELECT * FROM stocks where user=25';
+    const query = 'SELECT * FROM stocks where user=?';
     
-    connection.query(query, (err, results) => {
+    connection.query(query,[req.session.username], (err, results) => {
         
       if (err) {
         console.error('Error executing MySQL query:', err);
