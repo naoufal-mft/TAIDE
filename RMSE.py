@@ -3,9 +3,10 @@ import numpy as np
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
+from sklearn.metrics import mean_absolute_percentage_error
+
 fichiercsv = "predicted_prices_with_dates.csv"
 
-# Dictionnaire pour stocker les valeurs prédites et réelles par date
 Val_Date = {}
 all_predicted_values = []
 all_actual_values = []
@@ -25,17 +26,19 @@ with open(fichiercsv, newline='') as fichier_csv:
         Val_Date[date]['actual'].append(float(ligne[6]))
 
 # Calculer les erreurs pour chaque date
-dates = []
+"""dates = []
 rmse_val = []
 for date, valeurs in Val_Date.items():
     predicted_values = np.array(valeurs['predicted'])
     actual_values = np.array(valeurs['actual'])
-
+    print(predicted_values)
+    print(actual_values)
     mse = mean_squared_error(actual_values, predicted_values)
     rmse = np.sqrt(mse)
+    print(rmse)
 
     dates.append(date)
-    rmse_val.append(rmse)
+    rmse_val.append(rmse)"""
 
 # Parcourir toutes les dates dans Val_Date et collecter les valeurs prédites et réelles
 for valeurs in Val_Date.values():
@@ -52,8 +55,11 @@ global_rmse = np.sqrt(global_mse)
 
 print("RMSE global:", global_rmse)
 
+mape = mean_absolute_percentage_error(all_actual_values, all_predicted_values) * 100
+print("MAPE:", mape, "%")
+
 # Écrire les dates et les valeurs RMSE dans un fichier CSV
-with open('dates_rmse.csv', 'w', newline='') as csvfile:
+"""with open('dates_rmse.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(['Date', 'RMSE'])
     for date, rmse in zip(dates, rmse_val):
@@ -65,9 +71,9 @@ plt.plot(dates, rmse_val, marker='o', linestyle='-')
 plt.title('RMSE par date')
 plt.xlabel('Date')
 plt.ylabel('RMSE')
-plt.xticks(rotation=45)  # Rotation des étiquettes de l'axe des x pour une meilleure lisibilité
-plt.tight_layout()  # Ajustement automatique de la disposition pour éviter la coupure des étiquettes
-plt.grid(True)  # Afficher une grille
-plt.show()
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.grid(True)
+plt.show()"""
 
 
