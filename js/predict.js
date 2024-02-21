@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
         reinitialiserGraphiquePrediction();
         trainingData.length = 0;
         predictedData.length = 0;
+        previousErrors.length = 0;
         // Définir le chemin du fichier CSV pour l'action spécifiée
         const trainingCSVPath = `csv_files/${action}_training_data.csv`;
         const predictedCSVPath = `csv_files/${action}_predicted_prices_with_dates.csv`;
@@ -302,31 +303,37 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
     
+    // Initialiser le tableau pour stocker les erreurs précédentes
+    let previousErrors = [];
+
     // Fonction pour mettre à jour le graphique d'erreur avec les données actuelles
     function mettreAJourGraphiqueErreur() {
         const dates = predictedData[0] ? [predictedData[0].Date_1, predictedData[0].Date_2, predictedData[0].Date_3] : [];
         const predictedPrices = predictedData[0] ? [predictedData[0].Predicted_Close_1, predictedData[0].Predicted_Close_2, predictedData[0].Predicted_Close_3] : [];
         const actualPrices = predictedData[0] ? [predictedData[0].Actual_Close_1, predictedData[0].Actual_Close_2, predictedData[0].Actual_Close_3] : [];
-    
-        // Calculer les erreurs
+
+        // Calculer les erreurs pour les prix prédits et réels
         const errors = predictedPrices.map((predictedPrice, index) => Math.abs(predictedPrice - actualPrices[index]));
-    
-        // Calculer la racine carrée moyenne des erreurs
-        const rmse = Math.sqrt(errors.reduce((sum, error) => sum + Math.pow(error, 2), 0) / errors.length);
-    
-        // Mettre à jour le graphique d'erreur avec les nouvelles données de RMSE
+
+        // Ajouter les nouvelles erreurs aux erreurs précédentes
+        previousErrors = previousErrors.concat(errors);
+
+        // Calculer la racine carrée moyenne des erreurs précédentes
+        const rmse = Math.sqrt(previousErrors.reduce((sum, error) => sum + Math.pow(error, 2), 0) / previousErrors.length);
+
+        // Mettre à jour le graphique d'erreur avec la nouvelle RMSE
         dates.forEach((date, index) => {
             const existingIndex = errorChart.data.labels.indexOf(date);
             if (existingIndex !== -1) {
-                // Remplace les RMSE existants par le nouveau RMSE si la date existe déjà
+                // Remplacer les erreurs existantes par les nouvelles erreurs si la date existe déjà
                 errorChart.data.datasets[0].data[existingIndex] = rmse;
             } else {
-                // Ajoute la nouvelle date et le RMSE si la date n'existe pas déjà
+                // Ajouter la nouvelle date et les erreurs si la date n'existe pas déjà
                 errorChart.data.labels.push(date);
                 errorChart.data.datasets[0].data.push(rmse);
             }
         });
-    
+
         errorChart.update();
     }
 
@@ -354,16 +361,23 @@ document.addEventListener("DOMContentLoaded", function () {
         options: {
             scales: {
                 x: {
-                    type: 'time',
-                    time: {
-                        unit: 'day'
-                    },
+                    
                     title: {
                         display: true,
                         text: 'Date'
                     }
                 },
                 y: {
+                    
+                    ticks: {
+                        
+                        display: true,
+                        stepSize: 20,
+                        min: 0,
+                        max: 300,
+                        
+                        
+                    },
                     title: {
                         display: true,
                         text: 'Prix  en $'
