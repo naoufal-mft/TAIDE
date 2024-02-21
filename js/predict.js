@@ -1,47 +1,68 @@
 //@author: MEFTAHI Naoufal
 
 document.addEventListener("DOMContentLoaded", function () {
-    // la fonction fetch() est utilisée pour récupérer les données du serveur
-    fetch('/buttons') // Mettez à jour l'URL pour correspondre à votre point de terminaison serveur
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
-        })
-        .then(data => {
-            //parse est utilisé pour convertir les données en HTML
-            document.getElementById('buttonContainer').innerHTML = data;
-            console.log("success")
-            console.log(data);
+     // la fonction fetch() est utilisée pour récupérer les données du serveur
+     fetch('/buttons') // Mettez à jour l'URL pour correspondre à votre point de terminaison serveur
+     .then(response => {
+         if (!response.ok) {
+             throw new Error('Network response was not ok');
+         }
+         return response.text();
+     })
+     .then(data => {
+         //parse est utilisé pour convertir les données en HTML
+         document.getElementById('buttonContainer').innerHTML = data;
+         console.log("success")
+         console.log(data);
 
-            // Sélectionnez tous les boutons avec la classe ".btn.btn-primary.me-2"
-            const buttons = document.querySelectorAll('.btn.btn-primary.me-2');
+         // Sélectionnez tous les boutons avec la classe ".btn.btn-primary.me-2"
+         const buttons = document.querySelectorAll('.btn.btn-primary.me-2');
 
-            // Ajoutez des gestionnaires d'événements clic à chaque bouton
-            buttons.forEach(button => {
-                button.addEventListener('click', function() {
-                    buttons.forEach(btn => {
-                        btn.classList.remove('active-button');
-                    });
-        
-                    // Ajoutez la classe active au bouton cliqué
-                    button.classList.add('active-button');
-                    // Récupérez l'ID du bouton sur lequel l'utilisateur a cliqué
-                    const action = button.id;
-                    
-                    // Appelez la fonction pour charger les fichiers CSV avec l'action correspondante
-                    chargerFichiersCSV(action);
-                    contentContainer.classList.remove('hidden-content');
-                });
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
+         // Ajoutez des gestionnaires d'événements clic à chaque bouton
+         buttons.forEach(button => {
+             button.addEventListener('click', function() {
+                 buttons.forEach(btn => {
+                     btn.classList.remove('active-button');
+                 });
+     
+                 // Ajoutez la classe active au bouton cliqué
+                 button.classList.add('active-button');
+                 // Récupérez l'ID du bouton sur lequel l'utilisateur a cliqué
+                 const action = button.id;
 
-    });
+                 // la fonction fetch() est utilisée pour récupérer les données du serveur
+                 fetch('/run_lstm', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ action: action })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const predictedData = data.predictedData;
+                const trainingData = data.trainingData;
 
+                // Utilisez les données prédites et d'entraînement comme nécessaire
+                console.log('Données prédites:', predictedData);
+                console.log('Données d\'entraînement:', trainingData);
+                chargerDonnees(predictedData, trainingData);
+            })
+            
+                 contentContainer.classList.remove('hidden-content');
+             });
+         });
+     })
+     .catch(error => {
+         console.error('Error fetching data:', error);
+     });
+
+ });
 
     // Données d'entraînement initiales
     const trainingData = [];
@@ -70,73 +91,32 @@ document.addEventListener("DOMContentLoaded", function () {
         myNewChart.update();
     }
 
-    
-    // Ajoutez cette fonction pour charger les fichiers CSV en fonction de l'action
-    function chargerFichiersCSV(action) {
+    // Définir la fonction pour charger les données à partir des données d'entraînement et prédites
+    function chargerDonnees(trainingData, predictedData) {
         reinitialiserTableau();
         reinitialiserGraphiqueErreur();
         reinitialiserGraphiquePrediction();
+        // Réinitialiser les tableaux de données
         trainingData.length = 0;
         predictedData.length = 0;
-        previousErrors.length = 0;
-        // Définir le chemin du fichier CSV pour l'action spécifiée
-        const trainingCSVPath = `csv_files/${action}_training_data.csv`;
-        const predictedCSVPath = `csv_files/${action}_predicted_prices_with_dates.csv`;
-      
-        
-        // Charger les données d'entraînement correspondantes
-        fetch(trainingCSVPath)
-        .then(response => response.text())
-        .then(csvData => {
-            Papa.parse(csvData, {
-                header: true,
-                complete: function(results) {
-                    // Calculer l'indice à partir duquel commencer la lecture pour le dernier quart
-                    const startIndex = Math.ceil(results.data.length * 0.95);
-                    
-                    // Extraire seulement le dernier quart des données
-                    trainingData.length = 0; // Supprimer toutes les données précédentes
-                    trainingData.push(...results.data.slice(startIndex, results.data.length - 1)); // Exclure la dernière ligne
-                    console.log(`Données d'entraînement pour ${action} extraites avec succès :`, trainingData);
 
-                    // Mettre à jour le graphique et le tableau
-                    mettreAJourGraphique();
-                    mettreAJourGraphiqueErreur();
-                    mettreAJourPredictionGraphique();
-                    mettreAJourTableau();
-                }
-            });
-        })
-        .catch(error => {
-            console.error('Erreur lors de la récupération du fichier CSV d\'entraînement pour', action, ':', error);
-        });
+        // Charger les données d'entraînement et prédites depuis l'objet JSON
+        const { trainingData: trainingDataJson, predictedData: predictedDataJson } = data;
 
+        // Mettre à jour les tableaux de données avec les données reçues
+        trainingData.push(...trainingDataJson);
+        predictedData.push(...predictedDataJson);
 
-        // Charger les données prédites correspondantes
-        fetch(predictedCSVPath)
-            .then(response => response.text())
-            .then(csvData => {
-                Papa.parse(csvData, {
-                    header: true,
-                    complete: function(results) {
-                        // Mettre à jour les données prédites avec les nouvelles données CSV
-                        predictedData.length = 0; // Supprimer toutes les données précédentes
-                        predictedData.push(...results.data);
-                        console.log(`Données prédites pour ${action} extraites avec succès :`, predictedData);
+        console.log("Données d'entraînement chargées avec succès :", trainingData);
+        console.log("Données prédites chargées avec succès :", predictedData);
 
-                        // Mettre à jour le graphique et le tableau
-                        mettreAJourGraphique();
-                        mettreAJourGraphiqueErreur();
-                        mettreAJourPredictionGraphique();
-                        mettreAJourTableau();
-                    }
-                });
-            })
-            .catch(error => {
-                console.error('Erreur lors de la récupération du fichier CSV de prédictions pour', action, ':', error);
-            });
+        mettreAJourGraphique();
+        mettreAJourGraphiqueErreur();
+        mettreAJourPredictionGraphique();
+        mettreAJourTableau();
     }
 
+   
     
     // Créer le graphique initial
     const ctx = document.getElementById('myChart').getContext('2d');
@@ -299,7 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
         options: {
             scales: {
                 y: {
-                    beginAtZero: false,
+                    beginAtZero: true,
                     ticks: {
                         stepSize: 1
                     },
