@@ -178,6 +178,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
                 y: {
                     beginAtZero: false,
+                    
+                    
                     title: {
                         display: true,
                         text: 'Prix en $'
@@ -297,7 +299,10 @@ document.addEventListener("DOMContentLoaded", function () {
         options: {
             scales: {
                 y: {
-                    beginAtZero: false
+                    beginAtZero: false,
+                    ticks: {
+                        stepSize: 1
+                    },
                 }
             }
         }
@@ -353,7 +358,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 {
                     label: 'Prix réels',
                     data: [],
-                    borderColor: 'blue',
+                    borderColor: 'green',
                     fill: false
                 }
             ]
@@ -370,12 +375,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 y: {
                     
                     ticks: {
-                        
                         display: true,
-                        stepSize: 20,
-                        min: 0,
-                        max: 300,
-                        
+                        stepSize: 5, 
                         
                     },
                     title: {

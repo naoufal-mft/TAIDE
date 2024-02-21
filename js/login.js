@@ -6,6 +6,7 @@ var http = require("http");
 const mysql =require("mysql2");
 const express =require("express");
 const bodyParser= require("body-parser");
+const crypto = require('crypto');
 const app=express();
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
@@ -45,7 +46,9 @@ app.get('/', function(req, res) {
 app.post("/",encoder,function(req,res){
     var email = req.body.email;
     var password = req.body.password;
-    connection.query("select * from login where email=? and password = ? ",[email,password],function(error,results,fields){
+    var hash = crypto.createHash('md5').update(password).digest('hex');
+
+    connection.query("select * from login where email=? and password = ? ",[email,hash],function(error,results,fields){
         if (error) throw error;
         if(results.length> 0){
             console.log("check1")

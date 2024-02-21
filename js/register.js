@@ -4,6 +4,7 @@ const path = require('path');
 const mysql =require("mysql2");
 const express =require("express");
 const bodyParser= require("body-parser");
+const crypto = require('crypto');
 const app=express();
 
 const encoder = bodyParser.urlencoded();
@@ -33,6 +34,7 @@ app.post("/",encoder,function(req,res){
     var surname=req.body.last_name;
     var username=req.body.username;
     var stocks = req.body.checkbox
+    var hash = crypto.createHash('md5').update(password).digest('hex');
     console.log(stocks)
     connection.query("INSERT INTO user (nom, prenom,username) VALUES (?, ?,?)", [name, surname,username], function(error, results, fields) {
         if (error) {
@@ -43,7 +45,7 @@ app.post("/",encoder,function(req,res){
             console.log("Stocks inserted successfully");
         }
     });
-    connection.query("INSERT INTO login (id_user, email, password) VALUES((SELECT iduser FROM user WHERE username = ?) , ?, ?) ", [username,email, password], function(error, results, fields) {
+    connection.query("INSERT INTO login (id_user, email, password) VALUES((SELECT iduser FROM user WHERE username = ?) , ?, ?) ", [username,email, hash], function(error, results, fields) {
         if (error) {
             // Handle the error
             console.error(error);
