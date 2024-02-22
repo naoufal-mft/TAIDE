@@ -62,19 +62,23 @@ powershell -ExecutionPolicy Bypass
 ## Site Web
 Utilisation du site Web :
 
- Inscription 
+ - Inscription
+   
 <img src="/page_inscription.gif" width="1500">
 
 
- Login  
+ - Login
+   
 <img src="/login.gif" width="1500">
 
 
- Visualisation des prédictions d'un Stock sélectionné
+ - Visualisation des prédictions d'un Stock sélectionné
+   
 <img src="/stock.gif" width="1500">
 
 
- Accés aux résultats des stratégies MACD et Bollinger Bands ainsi aux sentiments des utilisateurs de Reddit sur une Action 
+ - Accés aux résultats des stratégies MACD et Bollinger Bands ainsi aux sentiments des utilisateurs de Reddit sur une Action
+    
 <img src="/strategie.gif" width="1500">
 
 
