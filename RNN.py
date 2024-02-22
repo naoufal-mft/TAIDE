@@ -72,7 +72,7 @@ model.compile(loss='mean_squared_error', optimizer='adam')
 arret_precoce = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
 
 # Entraînement
-historique = model.fit(X_train, y_train, epochs=3000, batch_size=64, validation_split=0.2, callbacks=[arret_precoce], verbose=1)
+historique = model.fit(X_train, y_train, epochs=3000, batch_size=32, validation_split=0.2, callbacks=[arret_precoce], verbose=1)
 
 # Évaluation
 perte_test = model.evaluate(X_test, y_test)
@@ -88,7 +88,7 @@ for i in range(len(X_test)):
     y_train = np.append(y_train, [y_test[i]], axis=0)
     
     # Entraîner le modèle avec les données d'entraînement mises à jour
-    historique = model.fit(X_train, y_train, epochs=3000, batch_size=64, validation_split=0.2, callbacks=[arret_precoce], verbose=0)
+    historique = model.fit(X_train, y_train, epochs=3000, batch_size=32, validation_split=0.2, callbacks=[arret_precoce], verbose=0)
     
     # Faire des prédictions pour la séquence actuelle
     prediction_actuelle = model.predict(np.array([X_test[i]]))
