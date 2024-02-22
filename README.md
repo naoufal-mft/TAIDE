@@ -1,6 +1,4 @@
-# Nom du Projet
-
-TRAIDE
+# TRAIDE
 
 Notre plateforme repose sur des modèles d'apprentissage automatique de pointe pour analyser les tendances du marché, les données historiques et le sentiment du marché, offrant ainsi des prévisions de prix pertinentes. Notre objectif dépasse la simple amélioration des performances commerciales individuelles ; nous aspirons également à transformer la manière dont les individus interagissent avec les marchés financiers et à contribuer à une prise de décision plus informée dans l'investissement en actions.
 
