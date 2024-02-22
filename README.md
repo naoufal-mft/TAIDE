@@ -10,6 +10,9 @@ Les données utilisateur et leurs informations d'identification sont stockées d
 
 - **Base de Données:** MySQL
 - **Backend / Serveur:** Node.js
+- **Frontend / Site web:** HTML ,CSS ,JavaScript et Bootstrap
+- **Developpement IA et strategies:** Python
+
 
 ## Prérequis
 
