@@ -14,7 +14,7 @@ Les données utilisateur et leurs informations d'identification sont stockées d
 ## Prérequis
 
 Avant de lancer le serveur, assurez-vous d'avoir Node.js installé sur votre machine. Si ce n'est pas le cas, vous pouvez l'installer en suivant les instructions sur le site officiel [Node.js](https://nodejs.org/).
-Assurer d'avoir installer MySQL et avoir executer le schema de creation de la base de données.
+Assurer d'avoir installer MySQL et avoir executer le schema de creation de la base de données 'databaseCode.sql'.
 Dans le code,assurer de rensigner les informations propres à votre base de données
 ## Installation des Dépendances
 
