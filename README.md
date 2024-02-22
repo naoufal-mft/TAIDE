@@ -60,7 +60,7 @@ PS: Pour des raison de sécurité, windows vous empeche de lancer des scripts av
 powershell -ExecutionPolicy Bypass       
 ```
 ## Site Web
-<img src="/page_inscription.gif" width="500">
+<img src="/page_inscription.gif" width="1500">
 ![Inscription](page_inscription.gif)
 ## Branches du Dépôt
 
