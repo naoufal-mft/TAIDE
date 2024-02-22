@@ -13,10 +13,11 @@ const encoder = bodyParser.urlencoded();
 app.use("/assets",express.static("assets"));
 const connection= mysql.createConnection({
     host:"localhost",
-    user:"root",
-    password:"azerty",
-    database:"ai_website_db"
+    user:"yourusername",
+    password:"yourpassword",
+    database:"databasename"
 });
+
 
 connection.connect(function(error){
     if (error) throw error
