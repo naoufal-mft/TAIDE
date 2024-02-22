@@ -8,7 +8,7 @@ Les données utilisateur et leurs informations d'identification sont stockées d
 
 ## Technologies Utilisées
 
-- **Base de Données:** MySQL
+- **Base de Données:** MySQL ![Inscription]([lien_vers_votre_image_inscription.gif](https://www.google.com/search?sca_esv=a2fe021a8e3ee580&rlz=1C1GCEA_enMA944MA944&sxsrf=ACQVn09HFhMh_NQsEQgktZkE9iQ5te5Yfg:1708608455039&q=mysql+png&tbm=isch&source=lnms&sa=X&ved=2ahUKEwijhpfAhr-EAxW2UKQEHcgIA2oQ0pQJegQIDBAB&biw=1920&bih=911&dpr=1#imgrc=fFItfxwqUuce4M))
 - **Backend / Serveur:** Node.js
 - **Frontend / Site web:** HTML ,CSS ,JavaScript et Bootstrap
 - **Developpement IA et strategies:** Python
