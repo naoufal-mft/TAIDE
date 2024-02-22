@@ -17,15 +17,15 @@ const encoder = bodyParser.urlencoded();
 app.use("/assets",express.static("assets"));
 const connection= mysql.createConnection({
     host:"localhost",
-    user:"root",
-    password:"azerty",
-    database:"ai_website_db"
+    user:"yourusername",
+    password:"yourpassword",
+    database:"databasename"
 });
 const sessionStore = new MySQLStore({
-    host:"localhost",
-    user:"root",
-    password:"azerty",
-    database:"ai_website_db",
+  host:"localhost",
+    user:"yourusername",
+    password:"yourpassword",
+    database:"databasename",
     clearExpired: true,
 });
 app.use(session({
