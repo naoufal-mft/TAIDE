@@ -62,21 +62,21 @@ powershell -ExecutionPolicy Bypass
 ## Site Web
 Utilisation du site Web :
 
-# Inscription 
+ Inscription 
 <img src="/page_inscription.gif" width="1500">
-![Inscription](page_inscription.gif)
 
-# Login  
+
+ Login  
 <img src="/login.gif" width="1500">
-![login](login.gif)
 
-# Visualisation des prédictions d'un Stock sélectionné
+
+ Visualisation des prédictions d'un Stock sélectionné
 <img src="/stock.gif" width="1500">
-![stock](stock.gif)
 
-# Accés aux résultats des stratégies MACD et Bollinger Bands ainsi aux sentiments des utilisateurs de Reddit sur une Action 
+
+ Accés aux résultats des stratégies MACD et Bollinger Bands ainsi aux sentiments des utilisateurs de Reddit sur une Action 
 <img src="/strategie.gif" width="1500">
-![strategie](strategie.gif)
+
 
 
 ## Branches du Dépôt
