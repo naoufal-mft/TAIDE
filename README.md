@@ -60,7 +60,7 @@ PS: Pour des raison de sécurité, windows vous empeche de lancer des scripts av
 powershell -ExecutionPolicy Bypass       
 ```
 ## Site Web
-![Inscription]((https://github.com/naoufal-mft/TRAIDE/blob/main/page_inscription.gif))
+![Inscription](page_inscription.gif)
 ## Branches du Dépôt
 
 Le dépôt contient deux branches pour le site web. La branche actuelle, "main", utilise des fichiers CSV obtenus à partir du réseau de neurones, (vous pouvez trouvez les scripts python du rnn et stratégies sur la branche ([lien vers la branche Trad_algo](https://github.com/naoufal-mft/TRAIDE/tree/Trad_algo))), pour afficher les prédictions. La deuxième branche,([lien vers la branche website+AI](https://github.com/naoufal-mft/TRAIDE/tree/website%2BAI)), représente une première base de liaison complète entre le RNN et le site web, qui aura besoin d'utiliser des données provenant d'une API en temps réel et le serveur Flask afin d'établir la communication entre le site web et le RNN.
