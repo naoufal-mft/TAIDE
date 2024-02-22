@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
                  const action = button.id;
 
                  // la fonction fetch() est utilisée pour récupérer les données du serveur
-                 fetch('/run_lstm', {
+                 fetch('/run_Model_RNN', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
