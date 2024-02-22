@@ -59,3 +59,9 @@ PS: Pour des raison de sécurité, windows vous empeche de lancer des scripts av
 ```bash
 powershell -ExecutionPolicy Bypass       
 ```
+## Branches du Dépôt
+
+Le dépôt contient deux branches pour le site web. La branche actuelle, "main", utilise des fichiers CSV obtenus à partir du réseau de neurones (vous pouvez trouvez les scripts python du rnn et stratégies sur la branche "Trad_algo") pour afficher les prédictions. La deuxième branche, "website+AI", représente une première base de liaison complète entre le RNN et le site web, qui aura besoin d'utiliser des données provenant d'une API en temps réel et le serveur Flask afin d'établir la communication entre le site web et le RNN.
+
+Cette approche à deux branches permet d'explorer différentes approches pour intégrer les prédictions du réseau de neurones dans le site web, en utilisant soit des données statiques précalculées soit des données actuelles provenant d'une API de données boursières payante. Cela offre une flexibilité pour le développement futur et l'amélioration de la plateforme TRAIDE, en permettant d'expérimenter de nouvelles fonctionnalités et d'optimiser les performances des prédictions.
+
