@@ -1,4 +1,4 @@
-###1ère base pour la liaison du réseau de neuronnes, stratégies et le site web
+### 1ère base pour la liaison du réseau de neuronnes, stratégies et le site web
 
 Cette branche est une autre version de notre site web actuel d'analyse des marchés financiers qui va utiliser directement l'intelligence artificielle implementée pour prédire les prix des actions. 
 Actuellement, le site web utilise un serveur Flask pour communiquer avec les scripts Python chargés de générer des données de prédiction et training. Les données sont ensuite visualisées sur le site web à l'aide de JavaScript et de bibliothèques de visualisation comme Chart.js.
