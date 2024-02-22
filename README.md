@@ -45,4 +45,8 @@ pm2 start modd.js
 pm2 start register.js
 pm2 start table.js
 ```
-
+## Arrêt du serveur
+Areter le serveur en exécutant la commande suivante dans votre terminal (Powershell):
+```bash
+pm2 stop all
+```
