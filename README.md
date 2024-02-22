@@ -46,6 +46,7 @@ pm2 start modd.js
 pm2 start register.js
 pm2 start table.js
 ```
+Après avoir lancer ces programmes node js, aller dans un navigateur et aller à http://localhost:4500/
 ## Arrêt du serveur
 Areter le serveur en exécutant la commande suivante dans votre terminal (Powershell):
 ```bash
