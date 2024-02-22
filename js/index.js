@@ -15,15 +15,15 @@ app.use("/csv_files", express.static("csv_files")); // Pour les fichiers statiqu
 
 const connection= mysql.createConnection({
     host:"localhost",
-    user:"root",
-    password:"azerty",
-    database:"ai_website_db"
+    user:"yourusername",
+    password:"yourpassword",
+    database:"databasename"
 });
 const sessionStore = new MySQLStore({
-  host: "localhost",
-  user: "root",
-  password: "azerty",
-  database: "ai_website_db"
+  host:"localhost",
+    user:"yourusername",
+    password:"yourpassword",
+    database:"databasename"
 });
 app.use(session({
   secret: 'dfr324567u6uhbfgfgh8iijmn',
